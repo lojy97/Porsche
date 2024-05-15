@@ -54,7 +54,7 @@ const productController = {
             await client.close();
         }
     },
-    getProducts: async (req, res) => {
+    getAllProducts: async (req, res) => {
         try {
             // Connect the client to the server
             await client.connect();
@@ -154,3 +154,4 @@ const productController = {
         }
     }
 }
+//missing  get one product
