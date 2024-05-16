@@ -4,10 +4,10 @@ const userController = require("../controller/adminController");
 const authorizationMiddleware=require('../middleware/authorization')
 
 // * Get all admins
-//router.get("/",  authorizationMiddleware(['admin']),adminController.getAllAdmins);
+router.get("/",  authorizationMiddleware(['admin']),adminController.getAdmins);
 
 // * Get one admin
-//router.get("/:id", authorizationMiddleware(['admin']), adminController.getAdmin);
+router.get("/:id", authorizationMiddleware(['admin']), adminController.getSpecificAdmin);
 
 // * Update one user
 router.put("/:id",  authorizationMiddleware(['admin','customer']),adminController.updateAdmin);

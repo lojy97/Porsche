@@ -9,6 +9,9 @@ router.get("/",  authorizationMiddleware(['admin']),orderController.getAllOrders
 // * Get one order
 router.get("/:id", authorizationMiddleware(['admin','customer']), orderController.getOrder);
 
+// * Get a specific user's orders
+router.get("/:id", authorizationMiddleware(['admin']), orderController.getCustomerOrders);
+
 // * Delete one order
 router.delete("/:id", authorizationMiddleware(['admin']), orderController.deleteOrder);
 
