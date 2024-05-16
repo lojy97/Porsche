@@ -187,6 +187,71 @@ const customerController = {
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
+    },
+    //get a certain customer
+
+    getCustomer: async (req, res) => {
+        try {
+            // Connect the client to the server
+            await client.connect();
+            console.log("Connected to MongoDB!");
+
+            // Access a specific database
+            const database = client.db("PorcheWeb");
+
+            // Access the "Customers" collection within the database
+            const collection = database.collection("Customers");
+
+            // Extract the customer ID from the request parameters
+            const customerId = parseInt(req.params.customerId);
+
+            // Find the customer document with the given CustomerID
+            const customer = await collection.findOne({ CustomerID: customerId });
+
+            if (customer) {
+                // If a customer was found with the given CustomerID
+                res.status(200).json(customer);
+            } else {
+                // If no customer was found with the given CustomerID
+                res.status(404).json({ message: `Customer with CustomerID ${customerId} not found` });
+            }
+        } catch (error) {
+            // Handle errors
+            console.error("Error getting customer:", error);
+            res.status(500).json({ message: "Internal server error" });
+        } finally {
+            // Ensure that the client will close when you finish/error
+            await client.close();
+            console.log("Connection to MongoDB closed.");
+        }
+    },
+    //get all customers 
+    getAllCustomers: async (req, res) => {
+        try {
+            // Connect the client to the server
+            await client.connect();
+            console.log("Connected to MongoDB!");
+
+            // Access a specific database
+            const database = client.db("PorcheWeb");
+
+            // Access the "Customers" collection within the database
+            const collection = database.collection("Customers");
+
+            // Find all customer documents
+            const customers = await collection.find().toArray();
+
+            // Send the customer documents as a response
+            res.status(200).json(customers);
+        } catch (error) {
+            // Handle errors
+            console.error("Error getting all customers:", error);
+            res.status(500).json({ message: "Internal server error" });
+        } finally {
+            // Ensure that the client will close when you finish/error
+            await client.close();
+            console.log("Connection to MongoDB closed.");
+        }
     }
 }
-//get all customers and get a certain customer are missing
+

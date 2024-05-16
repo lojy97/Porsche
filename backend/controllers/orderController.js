@@ -151,5 +151,64 @@ const orderController = {
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
+    },
+    // get all orders
+    getOrders: async (req, res) => {
+        try {
+            // Connect to MongoDB
+            await client.connect();
+            console.log("Connected to MongoDB!");
+
+            // Access the specific database
+            const database = client.db("PorcheWeb");
+
+            // Access the "Orders" collection within the database
+            const collection = database.collection("Orders");
+
+            // Find all orders in the collection
+            const orders = await collection.find().toArray();
+
+            // Send a success response with the orders
+            res.status(200).json(orders);
+        } catch (error) {
+            // Handle errors
+            console.error("Error getting orders:", error);
+            res.status(500).json({ message: "Internal server error" });
+        } finally {
+            // Close the MongoDB connection
+            await client.close();
+            console.log("Connection to MongoDB closed.");
+        }
+    },
+    // get all orders for a specific customer
+    getCustomerOrders: async (req, res) => {
+        try {
+            // Connect to MongoDB
+            await client.connect();
+            console.log("Connected to MongoDB!");
+
+            // Access the specific database
+            const database = client.db("PorcheWeb");
+
+            // Access the "Orders" collection within the database
+            const collection = database.collection("Orders");
+
+            // Extract the customerId from the request parameters
+            const customerId = parseInt(req.params.customerId);
+
+            // Find all orders in the collection
+            const orders = await collection.find({ customerId: customerId }).toArray();
+
+            // Send a success response with the orders
+            res.status(200).json(orders);
+        } catch (error) {
+            // Handle errors
+            console.error("Error getting orders:", error);
+            res.status(500).json({ message: "Internal server error" });
+        } finally {
+            // Close the MongoDB connection
+            await client.close();
+            console.log("Connection to MongoDB closed.");
+        }
     }
 }
