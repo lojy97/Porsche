@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const customerModel = require("../models/productModel.js");
+const productModel = require("../models/productModel.js");
 const bcrypt = require("bcrypt");
 const { get } = require("mongoose");
 require('dotenv').config();
