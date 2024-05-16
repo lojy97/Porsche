@@ -5,90 +5,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Products</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    .card-img-top:hover {
-        transform: scale(1.1); /* Increase the size by 10% */
-        transition: transform 0.3s ease; /* Smooth transition */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #efe8e5 !important; /* Change the background color here */
     }
-  /* styles.css */
 
-/* Style for the Update Product button */
-.update-btn {
-  background-color: #007bff; /* Bootstrap primary color */
-  border-color: #007bff;
-  color: #fff;
-  transition: background-color 0.3s, border-color 0.3s;
-}
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
 
-.update-btn:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
-}
+    .card-img-top:hover {
+        transform: scale(1.1);
+    }
 
-/* Style for the Delete Product button */
-.delete-btn {
-  background-color: #dc3545; /* Bootstrap danger color */
-  border-color: #dc3545;
-  color: #fff;
-  transition: background-color 0.3s, border-color 0.3s;
-}
+    .update-btn, .delete-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-right: 10px;
+      margin-top: 10px;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-.delete-btn:hover {
-  background-color: #c82333;
-  border-color: #bd2130;
-}
+    .update-btn {
+      background-color: #007bff;
+      border-color: #007bff;
+      color: #fff;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
 
-/* Additional styles to make buttons look nicer */
-.update-btn, .delete-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  margin-right: 10px; /* Space between buttons */
-  margin-top: 10px; /* Space above buttons */
-}
+    .update-btn:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .delete-btn {
+      background-color: #62000a !important;
+      border-color: #62000a !important;
+      color: #fff;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .delete-btn:hover {
+      background-color: #62000a;
+      border-color: #62000a;
+    }
 
     .navbar {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        background-color: dark;
-        z-index: 1000;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
     }
 
     .main-content {
-        margin-top: 60px;
+      margin-top: 80px;
+      text-align: center;
+
     }
 
     .navbar-brand-img {
-        width: 300px;  /* Adjust the width as needed */
-        height: auto; /* Maintain aspect ratio */
+      width: 200px;
+      height: auto;
     }
 
     #productContainer {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Increase the min-width to make the cards bigger */
-        gap: 20px; /* Add gap between grid items */
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
     }
 
     .card {
-        width: 100%; /* Ensure each card takes up the full width of its grid cell */
+      width: 100%;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 15px;
+      overflow: hidden;
     }
 
-    /* CSS for sidebar */
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
     .sidebar {
-        height: 100%;
-        width: 300px; /* Adjust as needed */
-        position: fixed;
-        top: 0;
-        right: -300px; /* Position off-screen by default */
-        z-index: 1;
-        background-color: #f0f0f0;
-        overflow-y: auto; /* Enable vertical scrolling */
-        transition: right 0.5s; /* Transition effect */
-        padding-top: 60px;
+      height: 100%;
+      width: 300px;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      z-index: 1;
+      background-color: #f0f0f0;
+      overflow-y: auto;
+      transition: right 0.5s;
+      padding-top: 60px;
     }
 
     .sidebar.active {
-        right: 0; /* Slide the sidebar in */
+      right: 0;
+    }
+
+    .header {
+      background-color: #dac0b6;
+      padding: 20px 0;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .animated-text {
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .tc {
+      margin-bottom: 20px;
+      
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
     }
   </style>
 </head>
@@ -96,7 +146,7 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid justify-content-center">
       <a class="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
-        <img src="../Images/porsche logo.png " alt="Porsche" class="navbar-brand-img">
+        <img src="../../public/Images/porsche logo.png" alt="Porsche" class="navbar-brand-img">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +183,7 @@
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" onclick="searchProducts()">Search</button>
         </div>
-        <button class="btn btn-primary" onclick="addProduct()">add a product</button>
+        <button class="btn btn-primary" onclick="addProduct()">Add a product</button>
       </div>
     </div>
   </div>
@@ -160,63 +210,87 @@
   <div class="sidebar" id="sidebar">
     <!-- Sidebar content goes here -->
   </div>
-</body>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Fetch products from backend when the page loads
-    fetchProducts();
-  });
 
-  let cartCount = 0;
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Render products from the static array when the page loads
+      renderProducts(staticProducts);
+    });
 
-  function fetchProducts() {
-    fetch("/retrieve-Products")
-      .then(response => response.json())
-      .then(products => {
-        renderProducts(products);
-      })
-      .catch(error => console.error("Error fetching products:", error));
-  }
+    let cartCount = 0;
 
-  function renderProducts(products) {
-    const productContainer = document.getElementById("productContainer");
-    productContainer.innerHTML = ""; // Clear existing products
+    // Static array of products
+    const staticProducts = [
+      {
+        ProductName: "Product 1",
+        Description: "Description for product 1",
+        Price: "$10",
+        url: "https://picjj.com/images/2024/05/09/sihnP.jpeg"
+      },
+      {
+        ProductName: "Product 2",
+        Description: "Description for product 2",
+        Price: "$20",
+        url: "https://picjj.com/images/2024/05/09/sioLa.jpeg"
+      },
+      {
+        ProductName: "Product 3",
+        Description: "Description for product 3",
+        Price: "$30",
+        url: "https://picjj.com/images/2024/05/09/sitFA.jpeg"
+      }
+    ];
 
-    products.forEach(product => {
-      const card = `
-        <div class="col">
-          <div class="card">
-            <img src="${product.url}" class="card-img-top" alt="${product.ProductName}">
-            <div class="card-body">
-              <h5 class="card-title">${product.ProductName}</h5>
-              <p class="card-text">${product.Description}</p>
-              <p class="card-text">Price: ${product.Price}</p>
-              <button class="btn btn-primary update-btn" onclick="updateProduct()">update product</button>
-              <button class="btn btn-primary delete-btn" onclick="deleteproduct()">delete product</button>
+    function renderProducts(products) {
+      const productContainer = document.getElementById("productContainer");
+      productContainer.innerHTML = ""; // Clear existing products
+
+      products.forEach(product => {
+        const card = `
+          <div class="col">
+            <div class="card">
+              <img src="${product.url}" class="card-img-top" alt="${product.ProductName}">
+              <div class="card-body">
+                <h5 class="card-title">${product.ProductName}</h5>
+                <p class="card-text">${product.Description}</p>
+                <p class="card-text">Price: ${product.Price}</p>
+                <button class="btn btn-primary update-btn" onclick="updateProduct()">Update product</button>
+                <button class="btn btn-primary delete-btn" onclick="deleteProduct()">Delete product</button>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-      productContainer.innerHTML += card;
-    });
-  }
+        `;
+        productContainer.innerHTML += card;
+      });
+    }
 
-  function searchProducts() {
-    const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
-    const productCards = document.querySelectorAll(".card");
-  
-    productCards.forEach(card => {
-      const productName = card.querySelector(".card-title").innerText.toLowerCase();
-      const productDescription = card.querySelector(".card-text").innerText.toLowerCase();
+    function searchProducts() {
+      const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+      const productCards = document.querySelectorAll(".card");
     
-      if (searchInput === "" || productName.includes(searchInput) || productDescription.includes(searchInput)) {
-        card.style.display = "block"; // Show the card if it matches the search
-      } else {
-        card.style.display = "none"; // Hide the card if it doesn't match the search
-      }
-    });
-  }
+      productCards.forEach(card => {
+        const productName = card.querySelector(".card-title").innerText.toLowerCase();
+        const productDescription = card.querySelector(".card-text").innerText.toLowerCase();
+      
+        if (searchInput === "" || productName.includes(searchInput) || productDescription.includes(searchInput)) {
+          card.style.display = "block"; // Show the card if it matches the search
+        } else {
+          card.style.display = "none"; // Hide the card if it doesn't match the search
+        }
+      });
+    }
 
+    function addProduct() {
+      alert("Add product functionality is not implemented in this static version.");
+    }
 
-</script>
+    function updateProduct() {
+      alert("Update product functionality is not implemented in this static version.");
+    }
+
+    function deleteProduct() {
+      alert("Delete product functionality is not implemented in this static version.");
+    }
+  </script>
+</body>
 </html>
