@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About us</title>
+  <link rel="stylesheet" href="About.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+  <body style="background-color:black;">
+   <!-- img src="PORSCHE.jpg" alt="Porsche" style="position: absolute; top: 0; left: 0; z-index: -1; width: 100%; height: auto;" -->
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid justify-content-center">
+            <a class="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
+        <img src="/Images/porsche logo.png" alt="Porsche" class="navbar-brand-img"> 
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/HTML/Home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/HTML/login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/HTML/about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/HTML/contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/HTML/products.html">Browse</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <body style="background-color:rgba(0, 0, 0, 0.151);">
+      <div class="sidebar" id="sidebar">
+        <header>
+          <button class="openbtn" onclick="openSidebar()"><i class="bi bi-list"></i></button>
+          <button class="closebtn" aria-label="Close" onclick="closeSidebar()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </header>
+        <ul class="menu">
+          <li class="item"><a href="/HTML/Home.html"><i class="bi bi-house-door"></i> Home</a></li>
+          <li class="item"><a href="/HTML/about.html"><i class="bi bi-info-circle"></i> About</a></li>
+          <li class="item"><a href="/HTML/contact.html"><i class="bi bi-envelope"></i> Contact us</a></li>
+          <li class="item"><a href="/HTML/profile.html"><i class="bi bi-envelope">Profile</i></a></li>
+        </ul>
+        <div class="sidebar-footer">
+          <a href="/HTML/login.html"><i class="bi bi-door-open"></i> Login</a>
+          <a href="/HTML/register.html"><i class="bi bi-person-plus"></i> Sign Up</a>
+        </div>
+      </div>
+      <div class="overlay" id="overlay" 
+      onclick="closeSidebar()"></div>
+  <div class="header">
+    <p class="fs-1 fw-bold animated-text">About us</p>
+    <div class="tc text-box" id="tc">
+
+      <p class="fw-normal animated-text">Welcome to the dynamic universe of Porsche, where innovation meets adrenaline
+        and every drive tells a captivating tale. Our journey is one fueled by a relentless pursuit of excellence, where
+        each model embodies the spirit of performance and the thrill of the open road.
+      </p>
+        <p class="fw-normal animated-text">
+        In our world, legends aren't just born they're forged. Take for instance, the remarkable Sally, the spirited
+        embodiment of Porsche, a vibrant character from the legendary Disney-Pixar movie franchise "Cars" Sally is an
+        embodiment of our brand's essence, a fusion of elegance, sophistication, and a passion for the road less
+        traveled. Just like Sally, our cars are symbols of freedom, adventure, and the pursuit of dreams.
+        At Porsche, we're not just makers of exceptional automobiles, we're creators of experiences. Did you know that
+        Porsche has a storied history that dates back to 1931? Founded by Ferdinand Porsche, our company has been at the
+        forefront of automotive engineering, pioneering groundbreaking technologies, and redefining what it means to
+        drive.
+        </p>
+      <p class="fw-normal animated-text">
+        From the iconic Porsche 911 to the commanding presence of the Cayenne, each model is a testament to our
+        unwavering commitment to craftsmanship and performance. Our dedication to innovation has earned us numerous
+        accolades, including countless victories on the racetrack and prestigious awards for design and engineering
+        excellence.
+        But our story doesn't end with our cars it begins with our community, a diverse tapestry of enthusiasts,
+        visionaries, and dreamers united by a shared love for driving. Here, connections are forged, friendships are
+        made, and memories are created that last a lifetime.
+        So, whether you're a seasoned aficionado or a curious explorer, we invite you to join us on this exhilarating
+        journey. Discover the legacy, embrace the passion, and experience the thrill of Porsche like never before.
+        Welcome to a world where every drive is an adventure and every journey is a story waiting to be told. Welcome to
+        Porsche. 
+      </p>
+
+      <div class="overlay"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <script>
+
+      window.onload = function () {
+     document.body.style.backgroundImage = "url('/Images/PORSCHE.jpg')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+      //  document.body.style.backgroundColor = "#FFFFFF";
+
+
+        const animatedTexts = document.querySelectorAll('.animated-text');
+        animatedTexts.forEach(text => {
+          text.classList.add('animated');
+        });
+      };
+
+      function openSidebar() {
+        document.getElementById("sidebar").style.left = "0";
+      }
+
+      function closeSidebar() {
+        document.getElementById("sidebar").style.left = "-250px";
+      }
+
+    </script>
+</body>
+
+</html>

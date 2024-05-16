@@ -1,0 +1,46 @@
+.card-img-top:hover {
+    transform: scale(1.1); /* Increase the size by 10% */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: dark ;
+    z-index: 1000;
+}
+.main-content {
+    margin-top: 60px; 
+}
+.navbar-brand-img {
+    width: 150px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+#productContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Create a grid with columns that automatically adjust based on available space */
+    gap: 20px; /* Add gap between grid items */
+  }
+  
+  .card {
+    width: 100%; /* Ensure each card takes up the full width of its grid cell */
+  }
+/* CSS for sidebar */
+.sidebar {
+    height: 100%;
+    width: 300px; /* Adjust as needed */
+    position: fixed;
+    top: 0;
+    right: -300px; /* Position off-screen by default */
+    z-index: 1;
+    background-color: #f0f0f0;
+    overflow-y: auto; /* Enable vertical scrolling */
+    transition: right 0.5s; /* Transition effect */
+    padding-top: 60px;
+  }
+
+  .sidebar.active {
+    right: 0; /* Slide the sidebar in */
+  }
+    
+  
