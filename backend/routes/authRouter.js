@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const customerController = require("../controller/customerController");
-const adminController = require("../controller/adminController");
+const customerController = require("../controllers/customerController");
+const adminController = require("../controllers/adminController");
 const authorizationMiddleware=require('../middleware/authorization')
 
 // * Customer Login

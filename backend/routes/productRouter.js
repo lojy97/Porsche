@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controller/productController");
+const productController = require("../controllers/productController");
 const authorizationMiddleware=require('../middleware/authorization')
 
 //add a product
@@ -17,3 +17,5 @@ router.put("/editProduct/:id",authorizationMiddleware(['admin']),productControll
 
 //delete a product
 router.delete("/deleteProduct/:id",authorizationMiddleware(['admin']),productController.deleteProduct);
+
+module.exports = router; 

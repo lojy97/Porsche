@@ -9,5 +9,5 @@ const customerSchema = new mongoose.Schema({
  
 })
 
-module.exports = mongoose.model('Cart', userSchema);
-module.exports.Schema = userSchema; 
+module.exports = mongoose.model('Customer', customerSchema);
+module.exports.Schema = customerSchema; 

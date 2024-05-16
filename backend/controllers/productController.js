@@ -10,48 +10,48 @@ const productController = {
             // Connect the client to the server
             await client.connect();
             console.log("Connected to MongoDB!");
-
+    
             // Access a specific database
             const database = client.db("PorcheWeb");
-
+    
             // Access the "Products" collection within the database
             const collection = database.collection("Products");
-
+    
             // Find the last product document to get the last ProductID
             const lastProduct = await collection.find().sort({ ProductID: -1 }).limit(1).toArray();
             let lastProductId = 0;
             if (lastProduct.length > 0) {
                 lastProductId = lastProduct[0].ProductID;
             }
-
+    
             // Extract product data from the request body
-            const { Name, Description, Price, Image } = req.body;
-
+            const { ProductName, Description, Price, Stock } = req.body;
+    
             // Increment the last ProductID by 1 to get the new ProductID
             const newProductId = lastProductId + 1;
-
+             console.log(newProductId)
             // Create a new product document
             const newProduct = {
                 ProductID: newProductId,
-                Name: name,
-                Description: description,
-                Price: price,
-                Image: image
-
+                ProductName: ProductName,
+                Description: Description,
+                Image: "",
+                Price: Price,
+                Stock: Stock
             };
-
-            //save product to database
+    
+            // Insert the new customer document into the collection
             await newProduct.save();
-
-            // Send a success response
-            res.status(201).json({ message: "Product added successfully", productId: newProduct.ProductID });
-        } catch (error) {
-            // Handle errors
-            console.error("Error adding product:", error);
-            res.status(500).json({ message: "Internal server error" });
-        } finally {
-            // Ensure that the client will close when you finish/error
-            await client.close();
+            console.log(`Inserted product with ID: ${newProductId}`);
+    
+    
+            // Close the connection to the MongoDB client
+  //          await client.close();
+    
+            res.status(201).json({ message: "Product added successfully" ,productId: newProductId });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: "Internal Server Error" });
         }
     },
     getAllProducts: async (req, res) => {

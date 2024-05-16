@@ -2,12 +2,12 @@ const express = require("express");
 const cookieParser=require('cookie-parser')
 const app = express();
 const mongoose = require("mongoose");
-const productRouter = require("./routes/productRouter");
-const customerRouter = require("./routes/customerRouter");
-const authRouter = require("./routes/authRouter");
-const adminRouter = require("./routes/adminRouter");
+//const productRouter = require("./routes/productRouter");
+//const customerRouter = require("./routes/customerRouter");
+//const authRouter = require("./routes/authRouter");
+//const adminRouter = require("./routes/adminRouter");
 const cartRouter = require("./routes/cartRouter");
-const orderRouter = require("./routes/orderRouter");
+//const orderRouter = require("./routes/orderRouter");
 require('dotenv').config();
 
 const authenticationMiddleware = require("./middleware/authentication");
@@ -19,7 +19,7 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: process.env.ORIGIN,
+  //  origin: process.env.ORIGIN,
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })

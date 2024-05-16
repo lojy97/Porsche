@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controller/adminController");
+const userController = require("../controllers/adminController");
 const authorizationMiddleware=require('../middleware/authorization')
 
 // * Get all admins
@@ -14,3 +14,5 @@ router.put("/:id",  authorizationMiddleware(['admin','customer']),adminControlle
 
 // * Delete one user
 router.delete("/:id", authorizationMiddleware(['admin']), adminController.deleteAdmin);
+
+module.exports = router; 
