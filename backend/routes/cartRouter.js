@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/cartController");
+const cartController = require("../controllers/cartController");
 const authorizationMiddleware=require('../middleware/authorization')
 
 router.post("/:id", authorizationMiddleware(['admin']),cartController.addToCart)
