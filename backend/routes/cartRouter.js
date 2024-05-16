@@ -9,3 +9,4 @@ router.get("/:id", authorizationMiddleware(['admin','customer']), cartController
 
 router.delete("/:id", authorizationMiddleware(['admin']), cartController.deleteFromCart);
 
+module.exports = router;

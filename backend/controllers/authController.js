@@ -29,26 +29,25 @@ const authController = {
 
             // Increment the last CustomerID by 1 to get the new CustomerID
             const newCustomerId = lastCustomerId + 1;
-            const hashedPassword = await bcrypt.hash(password, 10)
+            const hashedPassword = await bcrypt.hash(Password, 10); // Fixed variable name and used correct casing
 
             // Create a new customer document
             const newCustomer = {
                 CustomerID: newCustomerId,
-                Name: name,
-                Email: email,
-                Address: address,
+                Name: Name, 
+                Email: Email, 
+                Address: Address, 
                 Password: hashedPassword
-
             };
 
-            //save customer to database
-            await newCustomer.save();
+            // Insert customer document into the collection
+            await collection.insertOne(newCustomer);
 
             const payload = {
                 customerId: newCustomer.CustomerID,
                 email: newCustomer.Email
             };
-            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' })
+            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
 
             // Send a success response
             res.status(201).json({ message: "Customer added successfully", customerId: newCustomer.CustomerID });
@@ -63,9 +62,8 @@ const authController = {
         }
     },
     customerLogin: async (req, res) => {
-
-        const name = req.body.Name
-        const password = req.body.Password
+        const name = req.body.Name;
+        const password = req.body.Password;
         try {
             // Connect to MongoDB
             await client.connect();
@@ -79,27 +77,24 @@ const authController = {
 
             // Find the user by name (assuming 'name' is unique)
             const user = await collection.findOne({ Name: name });
-            console.log(user)
+            console.log(user);
             if (!user) {
                 // If user not found, send error response
                 return res.status(401).json({ auth: false, message: 'User not found.' });
             }
 
             // Compare the provided password with the stored hashed password
-            console.log(password)
-            console.log(user.Password)
-            const validPassword = (password.toString() === user.Password.toString())
+            const validPassword = await bcrypt.compare(password, user.Password); // Used await for bcrypt.compare()
 
             if (!validPassword) {
                 // If password is invalid, send error response
                 return res.status(401).json({ auth: false, message: 'Invalid password.' });
             }
 
-            const accessToken = jwt.sign(req.body.Name, process.env.ACCESS_TOKEN_SECRET)
+            const accessToken = jwt.sign({ name: user.Name, email: user.Email }, process.env.ACCESS_TOKEN_SECRET); // Fixed jwt.sign()
 
-            res.cookie('jwt', accessToken, { httpOnly: true })
-            res.cookie('info', user, { httpOnly: true })
-
+            res.cookie('jwt', accessToken, { httpOnly: true });
+            res.cookie('info', user, { httpOnly: true });
 
             // Send success response with the generated token
             res.status(200).json({ auth: true, token: accessToken });
@@ -113,6 +108,7 @@ const authController = {
             console.log("Connection to MongoDB closed.");
         }
     },
+
     adminRegister: async (req, res) => {
         try {
             // Connect the client to the server
@@ -137,25 +133,24 @@ const authController = {
 
             // Increment the last AdminID by 1 to get the new AdminID
             const newAdminId = lastAdminId + 1;
-            const hashedPassword = await bcrypt.hash(password, 10)
+            const hashedPassword = await bcrypt.hash(Password, 10); // Fixed variable name and used correct casing
 
             // Create a new admin document
             const newAdmin = {
                 AdminID: newAdminId,
-                Name: name,
-                Email: email,
+                Name: Name, // Fixed variable name and used correct casing
+                Email: Email, // Fixed variable name and used correct casing
                 Password: hashedPassword
-
             };
 
-            //save admin to database
-            await newAdmin.save();
+            // Insert admin document into the collection
+            await collection.insertOne(newAdmin);
 
             const payload = {
                 adminId: newAdmin.AdminID,
                 email: newAdmin.Email
             };
-            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' })
+            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
 
             // Send a success response
             res.status(201).json({ message: "Admin added successfully", adminId: newAdmin.AdminID });
@@ -169,8 +164,8 @@ const authController = {
         }
     },
     adminLogin: async (req, res) => {
-        const name = req.body.Name
-        const password = req.body.Password
+        const name = req.body.Name;
+        const password = req.body.Password;
         try {
             // Connect the client to the server
             await client.connect();
@@ -188,13 +183,13 @@ const authController = {
             // Check if the admin exists
             if (admin) {
                 // Compare the given password with the hashed password
-                const valid = await bcrypt.compare(password, admin.Password);
-                if (valid) {
+                const validPassword = await bcrypt.compare(password, admin.Password);
+                if (validPassword) {
                     const payload = {
                         adminId: admin.AdminID,
                         email: admin.Email
                     };
-                    const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' })
+                    const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
                     res.status(200).json({ message: "Login successful", token: token });
                 } else {
                     res.status(401).json({ message: "Invalid credentials" });
@@ -213,3 +208,4 @@ const authController = {
     }
 
 };
+module.exports = authController;

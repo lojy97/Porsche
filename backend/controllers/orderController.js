@@ -78,7 +78,7 @@ const orderController = {
             console.log("Connection to MongoDB closed.");
         }
     },
-    deleteOrders: async (req, res) => {
+    deleteOrder: async (req, res) => {
         try {
             // Connect to MongoDB
             await client.connect();
@@ -212,3 +212,4 @@ const orderController = {
         }
     }
 }
+module.exports = orderController;

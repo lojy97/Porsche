@@ -141,6 +141,42 @@ const customerController = {
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
-    }
+    },
+    updateCustomer: async (req, res) => {
+        try {
+            console.log("Received PUT request");
+            const customerId = parseInt(req.params.id); // Check the parameter name
+
+            // Connect to MongoDB
+            await client.connect();
+            console.log("Connected to MongoDB!");
+
+            const database = client.db("PorcheWeb");
+            const collection = database.collection("Customers");
+
+            const updateQuery = {
+                $set: {
+                    Name: req.body.name,
+                    Email: req.body.email,
+                    Address: req.body.address
+                }
+            };
+
+            const result = await collection.updateOne({ CustomerID: customerId }, updateQuery);
+
+            if (result.modifiedCount === 1) {
+                res.status(200).json({ message: `Customer with CustomerID ${customerId} updated successfully` });
+            } else {
+                res.status(404).json({ message: `Customer with CustomerID ${customerId} not found` });
+            }
+        } catch (error) {
+            console.error("Error updating customer:", error);
+            res.status(500).json({ error: "Internal server error" });
+        } finally {
+            await client.close();
+            console.log("Connection to MongoDB closed.");
+        }
+    },
 }
+module.exports = customerController;
 
