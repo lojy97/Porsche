@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
- import Home from './Home.jsx';
- import About from './About.jsx';
- import Contact from './Contact.jsx';
+import Home from './Home.jsx';
+import About from './About.jsx';
+import Contact from './Contact.jsx';
+import AdminsProject from './AdminProducts.jsx';
 //import Profile from './profile.jsx';
 import Products from './Products.jsx';
 //import './About.css';
@@ -106,6 +107,6 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <AdminsProject />cd
   </React.StrictMode>
 );
