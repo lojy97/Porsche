@@ -12,7 +12,7 @@ function Home() {
 
   return (
     <div style={{ backgroundColor: 'black' }}> {/* Added background color */}
-      <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+      {/* <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div className="container-fluid justify-content-center">
           <a className="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
             <img src="/Images/porsche logo.png" alt="Porsche" className="navbar-brand-img" />
@@ -30,7 +30,7 @@ function Home() {
                 <a className="nav-link" href="/HTML/login.html">Login</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/HTML/about.html">About</a>
+                <a className="nav-link" href="About.jsx">About</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/HTML/contact.html">Contact</a>
@@ -41,10 +41,10 @@ function Home() {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
       
 
-      <div className="sidebar" id="sidebar">
+      {/* <div className="sidebar" id="sidebar">
       <header>
           <button className="openbtn" onClick={openSidebar}>
             <span>&gt;</span> 
@@ -63,7 +63,7 @@ function Home() {
           <a href="login.html"><i className="bi bi-door-open"></i> Login</a>
           <a href="/HTML/register.html"><i className="bi bi-person-plus"></i> Sign Up</a>
         </div>
-      </div>
+      </div> */}
 
       <div style={{ height: '25%' }} className="car1">
         <video autoPlay loop muted playsInline>

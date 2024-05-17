@@ -1,42 +1,112 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 998; 
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.sidebar {
+  width: 150px;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: -150px; 
+  overflow-y: auto;
+  transition: left 0.6s ease;
+  background-color: rgba(78, 74, 74, 0.164);
+  box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
+  z-index: 999;
+  padding-top: 56px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.openbtn {
+  position: fixed;
+  top: 70px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
+  z-index: 1000;
+}
+
+.closebtn {
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  right: 10px;
+  top: 70px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.menu {
+  padding: 0;
+  margin: 50px 0 20px;
+  list-style: none;
+}
+
+.menu .item a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.menu .item a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu .item a i {
+  margin-top: 150px;
+  margin-right: 10px;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.sidebar-footer a {
+  color: white;
+  text-decoration: none;
+  display: block; 
+  margin: 5px 0; 
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar-footer a:hover {
+  text-decoration: underline;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.navbar-brand img {
+  width: 150px; 
+  height: auto;
+  margin-right: 100px; 
+  display: block; 
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.fw-normal::before {
+  content: ">";
+  color: red;
+  margin-right: 5px;
 }
