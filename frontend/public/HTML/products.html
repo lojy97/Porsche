@@ -5,72 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Products</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     
+    body {
+  font-family: 'Roboto', sans-serif;
+  background-color: black; /* Change the background color of the whole page to black */
+  color: #c98d8d;
+  margin: 0;
+  padding: 0;
+}
+
     .card-img-top:hover {
       transform: scale(1.1); /* Increase the size by 10% */
       transition: transform 0.3s ease; /* Smooth transition */
     }
     .card {
-      width: 100%;
-      transition: transform 0.3s, box-shadow 0.3s;
+      border: none; /* Remove border */
+      background-color: #35353685;
       border-radius: 15px;
       overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-title {
+      font-size: 1.25rem; /* Increase font size */
+      margin-bottom: 0.75rem; /* Adjust spacing */
+    }
+    .card-text {
+      font-size: 1rem; /* Adjust font size */
     }
 
     .buy-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-right: 10px;
-      margin-top: 10px;
-      border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      background-color: #1f194f;
+      background-color: #1f194f; /* Dark button color */
       border-color: #1f194f;
-      color: #fff;
-      transition: background-color 0.3s, border-color 0.3s;
+      color: #fff; /* White text color */
+      font-weight: bold; /* Bold text */
+    }
+    .buy-btn:hover {
+      background-color: #161132; /* Darken button color on hover */
+      border-color: #161132;
     }
     .navbar {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        background-color: dark ;
-        z-index: 1000;
+      background-color: #1f194f; /* Dark background color */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+    }
+    .navbar-brand-img {
+      max-width: 100px; /* Adjust the width */
     }
     .main-content {
         margin-top: 60px; 
         text-align: center;
-        transition: padding-top 0.3s ease; /* Add transition for smooth animation */
-        background-color: white; /* Set background color to white */
-        padding: 20px; /* Add padding */
     }
     .navbar-brand-img {
       width: 150px; /* Adjust the width as needed */
       height: auto; /* Maintain aspect ratio */
     }
-    .main-content.open-search {
-    padding-top: 50px; /* Adjusted padding */
-  }
     /* Added style for message */
-    #messageSection {
-      margin-top: 20px; /* Adjust as needed */
+    .message-section {
+      display: none; /* Hide by default */
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #dff0d8; /* Success message background color */
+      border: 1px solid #d0e9c6; /* Success message border */
+      color: #3c763d; /* Success message text color */
     }
     .header {
-      background-color: #dac0b6;
+      background-color: #b4b4b49d;
       padding: 20px 0;
       margin-bottom: 20px;
       border-bottom: 2px solid #e9ecef;
+      text-align: center;
     }
-
-    .animated-text {
-      animation: fadeIn 2s;
+  .animated-text {
+      font-size: 2.5rem; /* Larger font size */
+      font-weight: bold; /* Bold text */
+      color: #17161d; /* Dark text color */
+      
     }
 
     @keyframes fadeIn {
@@ -93,7 +110,7 @@
       top: 0;
       right: -300px;
       z-index: 1;
-      background-color: #f0f0f0;
+      background-color: #464646;
       overflow-y: auto;
       transition: right 0.5s;
       padding-top: 60px;
@@ -102,118 +119,62 @@
     .sidebar.active {
       right: 0;
     }
-    
+    .cart-section {
+      text-align: center;
+    }
     .search-icon {
-  color: white;
-  font-size: 1.5rem;
-  position: fixed;
-  top: 75px;
-  right: 20px;
-  cursor: pointer;
-  z-index: 999; /* Ensure the icon appears on top */
-}
-
-.search-container {
-      position: fixed;
-      top: 50px; /* Adjusted vertical position */
-      right: 30px; /* Adjusted horizontal position */
-      z-index: 1001;
-    }
-
-/* Adjusted style for searchBar */
-#searchBar {
-      position: absolute; /* Change position to absolute */
-      width: 300px;
-      background-color: #f8f8f8;
-      border-radius: 25px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 5px rgba(233, 226, 226, 0.589);
-      display: none;
-    }
-
-/* Adjusted style for searchInput */
-#searchInput {
-  width: calc(100% - 80px); /* Adjusted width */
-  border: none;
-  outline: none;
-}
-
-/* Adjusted style for search button */
-#searchButton {
-  width: 80px; /* Adjusted width */
-}
-
-/* Adjusted style for header when search bar opens */
-.header.open-search {
-  margin-top: 70x; /* Adjusted margin */
-}
-
-.products-container {
-      background-color: #f0f0f0; /* Set the background color of the container */
-      border: 1px solid #ccc;
-      padding: 20px;
-      margin-top: 20px; /* Adjust the margin as needed */
+    color: white;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 999;
   }
 
-  .products-header {
-      margin-top: 20px; /* Adjust the margin as needed */
+  .search-container {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    display: flex;
+    align-items: center;
   }
-/* Adjusted size for carousel items */
-/* Adjusted size for carousel items */
-.carousel-img-container {
-  max-height: 150px; /* Set maximum height */
-  overflow: hidden; /* Hide any overflow */
+
+  #searchBar {
+    position: relative;
+    width: 300px;
+    background-color: #f8f8f8;
+    border-radius: 25px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(233, 226, 226, 0.589);
+    display: none;
+  }
+
+  #searchInput {
+    width: calc(100% - 90px);
+    border: none;
+    outline: none;
+  }
+
+  #searchButton {
+    width: 80px;
+    margin-left: 10px;
+  }
+
+  .container.rounded {
+  backdrop-filter: blur(10px); /* Adds blurry shadow */
+  border-radius: 50px; /* Rounds the edges */
+  overflow: hidden; /* Hides the border of the container */
 }
 
-.carousel-img-container img {
-  max-width: 100%; /* Set maximum width to fill the container */
-  width: auto; /* Allow images to resize according to the container */
-  height: auto; /* Allow images to resize according to the container while maintaining aspect ratio */
-}
-
-/* Center the carousel */
-#productCarousel {
-  margin-top: 50px;
-}
-
-.carousel-inner {
-  display: flex;
-  flex-direction: row;
-}
-
-.carousel-item {
-  flex: 0 0 auto;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  width: auto;
-  color: #000; /* Adjust arrow color */
-  background-color: rgba(255, 255, 255, 0.5); /* Adjust background color */
-  border-radius: 50%;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  font-size: 2rem; /* Adjust arrow size */
-}
-
-.carousel-control-prev {
-  left: -50px;
-}
-
-.carousel-control-next {
-  right: -50px;
-}
-  
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid justify-content-center">
         <a class="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
-          <img src="porsche logo.png" alt="Porsche" class="navbar-brand-img">
+          <img src="/frontend/public/Images/porsche logo.png" alt="Porsche" class="navbar-brand-img">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -240,13 +201,11 @@
         </div>
     </div>
 </nav>
-
-<i class="bi bi-search search-icon" onclick="toggleSearchBar()"></i>
-
+  <div class="header">
   <div class="header main-content">
     <p class="fs-1 fw-bold animated-text">Products</p>
     <div class="tc text-box" id="tc">
-      <!-- Search Bar -->
+
   <!-- Search Bar -->
   <div class="search-container">
     <!-- Search Icon inside search container -->
@@ -260,7 +219,7 @@
   </div>
 
   <!-- Products Section -->
-  <div class="container">
+  <div class="container rounded">
     <div class="row" id="productContainer">
       <!-- Product cards will be dynamically added here -->
     </div>
@@ -285,52 +244,7 @@
     </div>
   </div>
 
-<!-- Products Section -->
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 offset-md-4">
-      <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <!-- Slide items will be dynamically added here -->
-        </div>
-        <!-- Navigation Arrows -->
-        <button class="carousel-control-prev" type="button" onclick="prevSlide()">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" onclick="nextSlide()">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-bbV/TZPSsCtWgDlZrZ5PA2IMmM1Gw2K5K30E2/cPVP7xUtU8b2n0ZuE2KRPeX+p3" crossorigin="anonymous"> </script>
   <script>
-          function toggleSearchBar() {
-    const searchBar = document.getElementById("searchBar");
-    const header = document.querySelector(".header");
-    const mainContent = document.querySelector(".main-content");
-
-    if (searchBar.style.display === "none") {
-      searchBar.style.display = "block";
-      header.classList.add("open-search");
-      mainContent.classList.add("open-search"); // Add the class to move the content down
-    } else {
-      searchBar.style.display = "none";
-      header.classList.remove("open-search");
-      mainContent.classList.remove("open-search"); // Remove the class to move the content up
-    }
-    document.addEventListener("DOMContentLoaded", function() {
-    const myCarousel = document.getElementById("productCarousel");
-    const carousel = new bootstrap.Carousel(myCarousel, {
-        interval: false // Disable auto slide
-    });
-});
-  }
     // Sample product data
     const products = [
       { name: "718 Boxster Style Edition", description: "Price:11 EGP",image:"/frontend/products.webp/718 Boxster Style Edition.webp" },
@@ -354,35 +268,51 @@
       { name: "Mules unisex – Turbo", description: "Price:9 EGP", image: "/frontend/products.webp/Mules unisex – Turbo.jpg" },
     ];
 
+
     let cartCount = 0;
-    let filteredProducts = products;
 
-    function renderProducts() {
-  const carouselInner = document.querySelector(".carousel-inner");
-  carouselInner.innerHTML = ""; // Clear previous content
+    function renderProducts(filteredProducts) {
+      const productContainer = document.getElementById("productContainer");
+      productContainer.innerHTML = ""; // Clear existing products
 
-  products.forEach((product, index) => {
-    const activeClass = index ===  2 ? "active" : ""; // Add active class to the first item
-    const productItem = `
-      <div class="carousel-item ${activeClass}">
-        <img src="${product.image}" class="d-block w-100" alt="${product.name}">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>${product.name}</h5>
-          <p>${product.description}</p>
-          <button class="buy-btn btn btn-primary" onclick="addToCartAndShowMessage()">Buy Now</button>
-        </div>
-      </div>
-    `;
-    carouselInner.innerHTML += productItem;
-  });
+      filteredProducts.forEach(product => {
+        const card = `
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <img src="${product.image}" class="card-img-top" alt="${product.name}">
+              <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">${product.description}</p>
+                <button class="btn btn-primary buy-btn" onclick="addToCartAndShowMessage()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        `;
+        productContainer.innerHTML += card;
+      });
+    }
+
+    function toggleSearchBar() {
+  const searchBar = document.getElementById("searchBar");
+  const header = document.querySelector(".header");
+  const mainContent = document.querySelector(".main-content");
+
+  if (searchBar.style.display === "none") {
+    searchBar.style.display = "block";
+    header.classList.add("open-search");
+    mainContent.classList.add("open-search"); // Add the class to move the content down
+  } else {
+    searchBar.style.display = "none";
+    header.classList.remove("open-search");
+    mainContent.classList.remove("open-search"); // Remove the class to move the content up
+  }
 }
-renderProducts();
 
-function searchProducts() {
-  const searchInput = document.getElementById("searchInput").value.toLowerCase();
-  filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchInput));
-  renderProducts(); // Render filtered products
-}
+    function searchProducts() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchInput));
+      renderProducts(filteredProducts);
+    }
 
     function addToCart() {
       cartCount++;
@@ -411,18 +341,6 @@ function searchProducts() {
 
     // Initial rendering of products
     renderProducts(products);
-
-    function prevSlide() {
-  const carousel = document.getElementById("productCarousel");
-  const bsCarousel = bootstrap.Carousel.getInstance(carousel);
-  bsCarousel.prev();
-}
-
-function nextSlide() {
-  const carousel = document.getElementById("productCarousel");
-  const bsCarousel = bootstrap.Carousel.getInstance(carousel);
-  bsCarousel.next();
-}
   </script>
 </body>
 </html>
