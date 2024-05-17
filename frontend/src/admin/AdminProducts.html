@@ -4,116 +4,85 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Products</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #efe8e5 !important; /* Change the background color here */
-    }
 
-    .card-img-top {
-        transition: transform 0.3s ease;
+  body {
+      margin: 0;
+      padding: 0;
+      background-position: center; /* Center the background image */
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Fix the background image while scrolling */
+      color: white;
+    }
+  
+    .product-title {
+      font-family: 'Pacifico', script;
+      color: palegoldenrod;
+      font-style: italic;
     }
 
     .card-img-top:hover {
-        transform: scale(1.1);
-    }
-
-    .update-btn, .delete-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-right: 10px;
-      margin-top: 10px;
-      border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .update-btn {
-      background-color: #007bff;
-      border-color: #007bff;
-      color: #fff;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-
-    .update-btn:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
-
-    .delete-btn {
-      background-color: #62000a !important;
-      border-color: #62000a !important;
-      color: #fff;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-
-    .delete-btn:hover {
-      background-color: #62000a;
-      border-color: #62000a;
-    }
-
-    .navbar {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .main-content {
-      margin-top: 80px;
-      text-align: center;
-
-    }
-
-    .navbar-brand-img {
-      width: 200px;
-      height: auto;
-    }
-
-    #productContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      transform: scale(1.1); /* Increase the size by 10% */
+      transition: transform 0.3s ease; /* Smooth transition */
     }
 
     .card {
-      width: 100%;
-      transition: transform 0.3s, box-shadow 0.3s;
+      border: none; /* Remove border */
+      background-color: #57575a7e;
       border-radius: 15px;
       overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(168, 167, 167, 0.007);
+    }
+    .card-title {
+      font-size: 1.25rem; /* Increase font size */
+      margin-bottom: 0.75rem; /* Adjust spacing */
+    }
+    .card-text {
+      font-size: 1rem; /* Adjust font size */
+      font-weight: bold;
     }
 
-    .sidebar {
-      height: 100%;
-      width: 300px;
-      position: fixed;
-      top: 0;
-      right: -300px;
-      z-index: 1;
-      background-color: #f0f0f0;
-      overflow-y: auto;
-      transition: right 0.5s;
-      padding-top: 60px;
+    .navbar {
+      background-color: #1f194f; /* Dark background color */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+    }
+    .main-content {
+        margin-top: 60px; 
+        text-align: center;
+    }
+    .navbar-brand-img {
+      max-width: 100px; /* Adjust the width */
+      width: 150px; /* Adjust the width as needed */
+      height: auto; /* Maintain aspect ratio */
     }
 
-    .sidebar.active {
-      right: 0;
+    .message-section {
+      display: none; /* Hide by default */
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #dff0d8; /* Success message background color */
+      border: 1px solid #d0e9c6; /* Success message border */
+      color: #3c763d; /* Success message text color */
     }
 
     .header {
-      background-color: #dac0b6;
-      padding: 20px 0;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #e9ecef;
-    }
+    /* background:linear-gradient(to right, #c9a619 , #a3a29a, rgb(56, 21, 21));*/
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #325579;
+    text-align: center;
+  } 
 
-    .animated-text {
+  .animated-text {
       animation: fadeIn 2s;
     }
 
@@ -131,18 +100,120 @@
       
     }
 
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
+    .sidebar {
+      height: 100%;
+      width: 300px;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      z-index: 1;
+      background-color: #464646;
+      overflow-y: auto;
+      transition: right 0.5s;
+      padding-top: 60px;
     }
 
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
+    .sidebar.active {
+      right: 0;
     }
+    .cart-section {
+      text-align: center;
+    }
+
+    .search-icon {
+    color: white;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 999;
+    }
+
+    .search-container {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    display: flex;
+    align-items: center;
+  }
+
+  #searchBar {
+    position: relative;
+    width: 300px;
+    background-color: #f8f8f8;
+    border-radius: 25px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(233, 226, 226, 0.589);
+    display: none;
+  }
+
+  #searchInput {
+    width: calc(100% - 90px);
+    border: none;
+    outline: none;
+  }
+
+  #searchButton {
+    width: 80px;
+    margin-left: 10px;
+  }
+
+
+  .buy-btn,
+.update-btn,
+.delete-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buy-btn {
+  background-color: #1f194f; /* Dark button color */
+  border-color: #1f194f;
+  color: #fff; /* White text color */
+  font-weight: bold; /* Bold text */
+}
+
+.buy-btn:hover {
+  background-color: #161132; /* Darken button color on hover */
+  border-color: #161132;
+}
+
+.update-btn {
+  background-color: #17a2b8; /* Update button color */
+  border-color: #17a2b8;
+  color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: bold; /* Bold text */
+}
+
+.update-btn:hover {
+  background-color: #117a8b; /* Darken update button color on hover */
+  border-color: #117a8b;
+}
+
+.delete-btn {
+  background-color: #dc3545 !important; /* Delete button color */
+  border-color: #dc3545 !important;
+  color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: bold; /* Bold text */
+}
+
+.delete-btn:hover {
+  background-color: #c82333 !important; /* Darken delete button color on hover */
+  border-color: #bd2130 !important;
+}
   </style>
+  
+
 </head>
-<body>
+<body style="background-image: url('/frontend/public/photos gt3/iris.jpg');">
   <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid justify-content-center">
       <a class="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
@@ -174,111 +245,187 @@
     </div>
   </nav>
 
-  <div class="header main-content">
-    <p class="fs-1 fw-bold animated-text">Products</p>
-    <div class="tc text-box" id="tc">
-      <!-- Search Bar -->
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" id="searchInput" placeholder="Search for products" aria-label="Search" aria-describedby="basic-addon2" oninput="searchProducts()">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" onclick="searchProducts()">Search</button>
-        </div>
-        <button class="btn btn-primary" onclick="addProduct()">Add a product</button>
+  <div class="header">
+    <div class="header main-content">
+      <p class="fs-1 fw-bold animated-text">
+        <span class="product-title">Products</span>
+      </p>
+      <div class="tc text-box" id="tc">
+      
+  
+  
+    <!-- Search Bar -->
+    <div class="search-container">
+      <!-- Search Icon inside search container -->
+      <i class="bi bi-search search-icon" onclick="toggleSearchBar()"></i>
+      <!-- Search Bar content -->
+      <div class="header" id="searchBar" style="display: none;">
+        <input type="text" id="searchInput" oninput="searchProducts()" placeholder="Search...">
+        <!-- Add search button -->
+        <button class="btn btn-primary" onclick="searchProducts()">Search</button>
       </div>
     </div>
-  </div>
 
-  <div class="container mt-4">
+
+  <!-- Products Section -->
+  <div class="container rounded">
     <div class="row" id="productContainer">
       <!-- Product cards will be dynamically added here -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="${product.image}" class="card-img-top" alt="${product.name}">
+          <div class="card-body">
+            <h5 class="card-title">${product.name}</h5>
+            <p class="card-text">${product.description}</p>
+            <button class="btn btn-primary buy-btn" onclick="addToCartAndShowMessage()">Buy Now</button>
+            <button class="btn btn-danger delete-btn" onclick="deleteProduct()">Delete</button>
+            <button class="btn btn-secondary update-btn" onclick="updateProduct()">Update</button>
+            
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="container mt-4">
     <div class="row">
       <div class="col text-center">
-        <h3>Cart</h3>
-        <p id="cartCount">0</p>
+        <button class="btn btn-success" onclick="addProduct()">Add Products!</button>
       </div>
     </div>
   </div>
 
-  <div id="messageSection" class="text-center" style="display: none;">
-    <p>Item added to cart!</p>
+  <!-- Cart Section -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col text-center">
+        <h3>Cart</h3>
+        <p id="cartCount">0</p>
+        <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
+      </div>
+    </div>
   </div>
 
-  <div class="sidebar" id="sidebar">
-    <!-- Sidebar content goes here -->
+  <!-- Message Section -->
+  <div class="container mt-4" id="messageSection">
+    <div class="row">
+      <div class="col text-center">
+        <p id="message" class="text-success">Added to Cart!</p>
+      </div>
+    </div>
   </div>
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       // Render products from the static array when the page loads
       renderProducts(staticProducts);
     });
+    // Sample product data
+    const products = [
+      { name: "718 Boxster Style Edition", description: "Price:11 EGP",image:"/frontend/products.webp/718 Boxster Style Edition.webp" },
+      { name: "718 Boxster GTS 4.0", description: "Price:7 EGP", image: "/frontend/products.webp/718 Boxster GTS 4.0.webp" },
+      { name: "718 Cayman GT4 RS", description: "Price:9 EGP", image: "/frontend/products.webp/718 Cayman GT4 RS.webp" },
+      { name: "911 Carrera GTS", description:"Price:20 EGP", image: "/frontend/products.webp/911 Carrera GTS.webp" },
+      { name: "718 Spyder RS", description: "Price:19 EGP", image: "/frontend/products.webp/718 Spyder RS.webp" },
+      { name: "911 GT3 RS", description: "Price:11 EGP", image: "/frontend/products.webp/911 GT3 RS.webp" },
+      { name: "911 Carrera GTS Cabriolet", description: "Price:4 EGP", image: "/frontend/products.webp/911 Carrera GTS Cabriolet.webp" },
+      { name: "911 Turbo", description: "Price:19 EGP", image: "/frontend/products.webp/911 Turbo.webp" },
+      { name: "911 GT3", description: "Price:7 EGP", image: "/frontend/products.webp/911 GT3.webp" },
+      { name: "911 Dakar", description: "Price:13 EGP", image: "/frontend/products.webp/911 Dakar.webp" },
+      { name: "Taycan", description: "Price:11 EGP", image: "/frontend/products.webp/Taycan.webp" },
+      { name: "Panamera", description: "Price:9 EGP", image: "/frontend/products.webp/Panamera.webp" },
+      { name: "Macan 4 Electric", description: "Price:120 EGP", image: "/frontend/products.webp/Macan 4 Electric.webp" },
+      { name: "Cayenne", description: "Price: 5EGP", image: "/frontend/products.webp/Cayenne.webp" },
+      { name: "eBike Sport 3rd Gen", description: "Price:9 EGP", image: "/frontend/products.webp/ebike.jpg" },
+      { name: "Luxe Summer Knitted Blazer", description: "Price:9 EGP", image: "/frontend/products.webp/Luxe Summer Knitted Blazer.jpg" },
+      { name: "RUBY eau de parfum", description: "Price:9 EGP", image: "/frontend/products.webp/RUBY eau de parfum.jpg" },
+      { name: "Martini Racing watch", description: "Price:9 EGP", image: "/frontend/products.webp/Martini Racing watch.jpg" },
+      { name: "Mules unisex – Turbo", description: "Price:9 EGP", image: "/frontend/products.webp/Mules unisex – Turbo.jpg" },
+    ];
 
     let cartCount = 0;
 
-    // Static array of products
-    const staticProducts = [
-      {
-        ProductName: "Product 1",
-        Description: "Description for product 1",
-        Price: "$10",
-        url: "https://picjj.com/images/2024/05/09/sihnP.jpeg"
-      },
-      {
-        ProductName: "Product 2",
-        Description: "Description for product 2",
-        Price: "$20",
-        url: "https://picjj.com/images/2024/05/09/sioLa.jpeg"
-      },
-      {
-        ProductName: "Product 3",
-        Description: "Description for product 3",
-        Price: "$30",
-        url: "https://picjj.com/images/2024/05/09/sitFA.jpeg"
-      }
-    ];
 
-    function renderProducts(products) {
-      const productContainer = document.getElementById("productContainer");
-      productContainer.innerHTML = ""; // Clear existing products
+    function renderProducts(filteredProducts) {
+  const productContainer = document.getElementById("productContainer");
+  productContainer.innerHTML = ""; // Clear existing products
 
-      products.forEach(product => {
-        const card = `
-          <div class="col">
-            <div class="card">
-              <img src="${product.url}" class="card-img-top" alt="${product.ProductName}">
-              <div class="card-body">
-                <h5 class="card-title">${product.ProductName}</h5>
-                <p class="card-text">${product.Description}</p>
-                <p class="card-text">Price: ${product.Price}</p>
-                <button class="btn btn-primary update-btn" onclick="updateProduct()">Update product</button>
-                <button class="btn btn-primary delete-btn" onclick="deleteProduct()">Delete product</button>
-              </div>
-            </div>
+  filteredProducts.forEach(product => {
+    const card = `
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="${product.image}" class="card-img-top" alt="${product.name}">
+          <div class="card-body">
+            <h5 class="card-title">${product.name}</h5>
+            <p class="card-text">${product.description}</p>
+            <button class="btn btn-primary buy-btn" onclick="addToCartAndShowMessage()">Buy Now</button>
+            <button class="btn btn-danger delete-btn" onclick="deleteProduct()">Delete</button>
+            <button class="btn btn-secondary update-btn" onclick="updateProduct()">Update</button>
           </div>
-        `;
-        productContainer.innerHTML += card;
-      });
-    }
+        </div>
+      </div>
+    `;
+    productContainer.innerHTML += card;
+  });
+}
+    function toggleSearchBar() {
+  const searchBar = document.getElementById("searchBar");
+  const header = document.querySelector(".header");
+  const mainContent = document.querySelector(".main-content");
+
+  if (searchBar.style.display === "none") {
+    searchBar.style.display = "block";
+    header.classList.add("open-search");
+    mainContent.classList.add("open-search"); // Add the class to move the content down
+  } else {
+    searchBar.style.display = "none";
+    header.classList.remove("open-search");
+    mainContent.classList.remove("open-search"); // Remove the class to move the content up
+  }
+}
 
     function searchProducts() {
-      const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
-      const productCards = document.querySelectorAll(".card");
-    
-      productCards.forEach(card => {
-        const productName = card.querySelector(".card-title").innerText.toLowerCase();
-        const productDescription = card.querySelector(".card-text").innerText.toLowerCase();
-      
-        if (searchInput === "" || productName.includes(searchInput) || productDescription.includes(searchInput)) {
-          card.style.display = "block"; // Show the card if it matches the search
-        } else {
-          card.style.display = "none"; // Hide the card if it doesn't match the search
-        }
-      });
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchInput));
+      renderProducts(filteredProducts);
     }
+
+    function showMessage() {
+  const messageSection = document.querySelector("#messageSection");
+  messageSection.style.display = "block"; // Show message section
+
+  setTimeout(() => {
+    messageSection.style.display = "none"; // Hide message section after 2 seconds
+  }, 2000);
+}
+
+    function showRecommendations() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const filteredProducts = products.filter(product => product.name.toLowerCase().startsWith(searchInput));
+      renderProducts(filteredProducts);
+    }
+    function addToCartAndShowMessage() {
+      addToCart();
+      showMessage();
+    }
+
+    function addToCart() {
+      cartCount++;
+      document.getElementById("cartCount").innerText = cartCount;
+      showMessage();
+    }
+
+    function clearCart(index) {
+      if (cartCount > 0) { // Check if cart count is greater than zero
+        cart.splice(index, 1);
+        cartCount--; // Decrease cart count
+        document.getElementById("cartCount").innerText = cartCount; // Update cart count display
+    }
+}
+
+    // Initial rendering of products
+    renderProducts(products);
 
     function addProduct() {
       alert("Add product functionality is not implemented in this static version.");
