@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Home.jsx';
 import About from './About.jsx';
+import Contact from './Contact.jsx';
+import Profile from './profile.jsx';
 import './Home.css';
 import './About.css';
+import './Contact.css';
+import './Profile.css';
 import './App.css'; // Add a CSS file to style the navbar buttons
 
 function App() {
@@ -41,11 +45,11 @@ function App() {
               <li className={`nav-item ${currentPage === 'about' ? 'active' : ''}`}>
                 <button className="nav-link" onClick={() => handleNavigation('about')}>About</button>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/HTML/login.html">Login</a>
+              <li className={`nav-item ${currentPage === 'contact' ? 'active' : ''}`}>
+                <button className="nav-link" onClick={() => handleNavigation('contact')}>Contact</button>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/HTML/contact.html">Contact</a>
+                <a className="nav-link" href="/HTML/login.html">Login</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/HTML/products.html">Browse</a>
@@ -64,10 +68,26 @@ function App() {
           </button>
         </header>
         <ul className="menu">
-          <li className="item"><a href="/HTML/Home.html"><i className="bi bi-house-door"></i> Home</a></li>
-          <li className="item"><a href="/HTML/about.html"><i className="bi bi-info-circle"></i> About</a></li>
-          <li className="item"><a href="/HTML/contact.html"><i className="bi bi-envelope"></i> Contact us</a></li>
-          <li className="item"><a href="/profile"><i className="bi bi-person"></i> Profile</a></li>
+          <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('home')}>
+              <i className="bi bi-house-door"></i> Home
+            </button>
+          </li>
+          <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('about')}>
+              <i className="bi bi-info-circle"></i> About
+            </button>
+          </li>
+          <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('contact')}>
+              <i className="bi bi-envelope"></i> Contact us
+            </button>
+          </li>
+          <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('profile')}>
+              <i className="bi bi-envelope"></i> Profile
+            </button>
+          </li>
         </ul>
         <div className="sidebar-footer">
           <a href="login.html"><i className="bi bi-door-open"></i> Login</a>
@@ -77,6 +97,8 @@ function App() {
 
       {currentPage === 'home' && <Home />}
       {currentPage === 'about' && <About />}
+      {currentPage === 'contact' && <Contact />}
+      {currentPage === 'profile' && <Profile />}
     </div>
   );
 }
