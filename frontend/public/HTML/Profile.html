@@ -9,131 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
 
-    .navbar {
-        position: relative;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-      }
-      
-      .sidebar {
-      width: 150px;
-      height: 100vh;
-      position: fixed;
-      top: 0px;
-      left: -150px; 
-      overflow-y: auto;
-      transition: left 0.6s ease;
-      background-color: rgba(78, 74, 74, 0.164);
-      box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
-      z-index: 999;
-      padding-top: 56px;
-      }
-      
-      .openbtn {
-      position: fixed;
-      top: 70px;
-      left: 10px;
-      background-color: rgba(0, 0, 0, 0);
-      color: white;
-      border: none;
-      padding: 5px;
-      cursor: pointer;
-      box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
-      z-index: 1000;
-      }
-      
-      .closebtn {
-      position: absolute;
-      color: white;
-      font-size: 20px;
-      right: 10px;
-      top: 70px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-      }
-      
-      .fs-1.fw-bold {
-      font-size: 7rem !important;
-      color: white;
-      margin-left: 100px !important;
-      text-shadow: 2px 2px 4px black;
-      }
-      .words {
-      font-size: 2rem !important;
-      margin-left: 100px !important;
-      margin-right: 100px !important;
-      color: white;
-      text-shadow: 2px 2px 4px black;
-      }
-      
-      .menu {
-      padding: 0;
-      margin: 50px 0 20px;
-      list-style: none;
-      }
-      
-      .menu .item a {
-      display: block;
-      padding: 10px 15px;
-      color: white;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      }
-      
-      .menu .item a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      }
-      
-      .menu .item a i {
-      margin-top: 150px;
-      margin-right: 10px;
-      }
-      
-      .sidebar-footer {
-      position: absolute;
-      bottom: 10px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      }
-      
-      .sidebar-footer a {
-      color: white;
-      text-decoration: none;
-      display: block; 
-      margin: 5px 0; 
-      }
-      
-      .sidebar-footer a:hover {
-      text-decoration: underline;
-      }
-      
-      .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); 
-      z-index: 998; 
-      display: none;
-      }
-      
-      .navbar-brand img {
-       width: 150px; 
-       height: auto;
-       margin-right: 100px; 
-       display: block; 
-      }
-
-      body {
+body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000;
+            background-image: url('/frontend/public/photos gt3/PersonalInfo.jpg');
+            background-size: cover;
+            background-position: center;
             color: #fff;
         }
 
@@ -141,23 +23,29 @@
             width: 80%;
             margin: 20px auto;
             padding: 20px;
-            background-color: #222;
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
-        h1, h2 {
+        h1,
+        h2 {
             border-bottom: 2px solid #ccc;
             padding-bottom: 10px;
             margin-bottom: 20px;
+            color: #fff;
         }
 
         label {
             display: block;
             margin-bottom: 10px;
+            color: #fff;
         }
 
-        input[type="text"], input[type="email"], input[type="password"], textarea {
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 20px;
@@ -172,238 +60,254 @@
         }
 
         button {
-            padding: 10px 20px;
+            padding: 10px 10px;
             background-color: #28a745;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            text-align: justify;
         }
 
-        button:hover {
+        .change password button:hover {
             background-color: #218838;
         }
 
-        .navbar-brand-img {
-            height: 40px;
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 auto 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #fff;
+        }
+
+        .profile-picture img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .navbar {
+        position: relative;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
         }
 
         .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: -250px;
-            overflow-y: auto;
-            transition: left 0.6s ease;
-            background-color: rgba(78, 74, 74, 0.164);
-            box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
-            z-index: 999;
-            padding-top: 56px;
+        width: 150px;
+        height: 100vh;
+        position: fixed;
+        top: 0px;
+        left: -150px; 
+        overflow-y: auto;
+        transition: left 0.6s ease;
+        background-color: rgba(78, 74, 74, 0.164);
+        box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
+        z-index: 999;
+        padding-top: 56px;
         }
 
         .openbtn {
-            position: fixed;
-            top: 70px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0);
-            color: white;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-            box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
-            z-index: 1000;
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0);
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
+        z-index: 1000;
         }
 
         .closebtn {
-            position: absolute;
-            color: white;
-            font-size: 20px;
-            right: 10px;
-            top: 70px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        position: absolute;
+        color: white;
+        font-size: 20px;
+        right: 10px;
+        top: 70px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
         }
 
         .fs-1.fw-bold {
-            font-size: 7rem !important;
-            color: white;
-            margin-left: 100px !important;
-            text-shadow: 2px 2px 4px black;
+        font-size: 7rem !important;
+        color: white;
+        margin-left: 100px !important;
+        text-shadow: 2px 2px 4px black;
         }
-
         .words {
-            font-size: 2rem !important;
-            margin-left: 100px !important;
-            margin-right: 100px !important;
-            color: white;
-            text-shadow: 2px 2px 4px black;
+        font-size: 2rem !important;
+        margin-left: 100px !important;
+        margin-right: 100px !important;
+        color: white;
+        text-shadow: 2px 2px 4px black;
         }
 
         .menu {
-            padding: 0;
-            margin: 50px 0 20px;
-            list-style: none;
+        padding: 0;
+        margin: 50px 0 20px;
+        list-style: none;
         }
 
         .menu .item a {
-            display: block;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
+        display: block;
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
         }
 
         .menu .item a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.1);
         }
 
         .menu .item a i {
-            margin-top: 150px;
-            margin-right: 10px;
+        margin-top: 150px;
+        margin-right: 10px;
         }
 
         .sidebar-footer {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            width: 100%;
-            text-align: center;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
         }
 
         .sidebar-footer a {
-            color: white;
-            text-decoration: none;
-            display: block; 
-            margin: 5px 0; 
+        color: white;
+        text-decoration: none;
+        display: block; 
+        margin: 5px 0; 
         }
 
         .sidebar-footer a:hover {
-            text-decoration: underline;
+        text-decoration: underline;
+        
         }
 
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); 
-            z-index: 998; 
-            display: none;
-        }
-
-        .navbar {
-            position: relative;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        z-index: 998; 
+        display: none;
         }
 
         .navbar-brand img {
-            width: 150px; 
-            height: auto;
-            margin-right: 100px; 
-            display: block; 
+        width: 150px; 
+        height: auto;
+        margin-right: 100px; 
+        display: block; 
         }
 
-        @media (max-width: 768px) {
-            .container {
-                width: 100%;
-            }
 
-            .sidebar {
-                width: 200px;
-            }
-        }
+        
     </style>
 </head>
-<body style="background-color:rgba(0, 0, 0, 0.151);">
-    
+
+<body style="background-color:whitesmoke;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid justify-content-center">
-            <a class="navbar-brand" href="https://www.porsche.com/middle-east/egypt/">
-                <img src="/Images/porsche logo.png" alt="Porsche" class="navbar-brand-img"> 
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/HTML/Home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/HTML/login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/HTML/about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/HTML/contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Browse</a>
-                    </li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="https://www.porsche.com/middle-east/_egypt_/">
+        <img src="/frontend/public/Images/porsche logo.png" alt="Porsche" class="navbar-brand-img"> 
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/HTML/Home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/HTML/login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/HTML/about.html">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/HTML/contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/products">Browse</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-    
+  </head>
+  
     <div class="sidebar" id="sidebar">
-        <header>
-            <button class="openbtn" onclick="openSidebar()"><i class="bi bi-list"></i></button>
-            <button class="closebtn" aria-label="Close" onclick="closeSidebar()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </header>
-        <ul class="menu">
-            <li class="item"><a href="/HTML/Home.html"><i class="bi bi-house-door"></i> Home</a></li>
-            <li class="item"><a href="/HTML/about.html"><i class="bi bi-info-circle"></i> About</a></li>
-            <li class="item"><a href="/HTML/contact.html"><i class="bi bi-envelope"></i> Contact us</a></li>
-            <li class="item"><a href="/profile.html"><i class="bi bi-envelope">Profile</i></a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="/HTML/login.html"><i class="bi bi-door-open"></i> Login</a>
-            <a href="/HTML/register.html"><i class="bi bi-person-plus"></i> Sign Up</a>
-        </div>
+      <header>
+        <button class="openbtn" onclick="openSidebar()"><i class="bi bi-list"></i></button>
+        <button class="closebtn" aria-label="Close" onclick="closeSidebar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+      <ul class="menu">
+        <li class="item"><a href="/HTML/Home.html"><i class="bi bi-house-door"></i> Home</a></li>
+        <li class="item"><a href="/HTML/about.html"><i class="bi bi-info-circle"></i> About</a></li>
+        <li class="item"><a href="/HTML/contact.html"><i class="bi bi-envelope"></i> Contact us</a></li>
+        <li class="item"><a href="/profile"><i class="bi bi-envelope">Profile</i></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="login.html"><i class="bi bi-door-open"></i> Login</a>
+        <a href="/HTML/register.html"><i class="bi bi-person-plus"></i> Sign Up</a>
+      </div>
     </div>
-    
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-    
-    <div class="container">
+    <div class="overlay" id="overlay" 
+    onclick="closeSidebar()"></div>
+
+ <div class="container">
         <h1>Profile</h1>
-    
+
+        <!-- Profile picture section -->
+        <div class="profile-picture">
+            <img src="/path_to_your_default_profile_picture.jpg" alt="Profile Picture">
+        </div>
+        <button class="btn btn-primary d-block mx-auto">Add Profile Picture</button>
+
         <div class="section" id="personal-details">
             <h2>Personal Details</h2>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name">
-            
+
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Your Email">
-    
+
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="New Password">
-    
+
             <button type="button">Change Password</button>
-            </div>
-    
+        </div>
+
         <div class="section">
-            <h2>Cart</h2>
+            <h2><i class="bi bi-cart"></i> Cart</h2>
             <textarea id="cart" name="cart" placeholder="Enter items in your cart..."></textarea>
         </div>
-    
+
         <div class="section">
-            <h2>Orders</h2>
+            <h2><i class="bi bi-list-check"></i> Orders</h2>
             <textarea id="orders" name="orders" placeholder="Enter your orders..."></textarea>
         </div>
     </div>
     
     <script>
-         function openSidebar() {
+        function openSidebar() {
         document.getElementById("sidebar").style.left = "0";
         document.getElementById("overlay").style.display = "block";
     }
