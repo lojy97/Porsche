@@ -1,0 +1,87 @@
+/* adminproducts.module.css */
+
+.header {
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
+  
+  .main-content {
+    margin-top: 20px;
+  }
+  
+  .animated-text {
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  .product-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .tc {
+    text-align: center;
+  }
+  
+  .text-box {
+    padding: 20px;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-icon {
+    cursor: pointer;
+  }
+  
+  #searchBar {
+    display: none;
+  }
+  
+  .container {
+    margin-top: 20px;
+  }
+  
+  .rounded {
+    border-radius: 5px;
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  .col {
+    padding: 0 15px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  #cartCount {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  #messageSection {
+    display: none;
+  }
+  
+  .text-success {
+    color: green;
+  }
+  
+  .open-search {
+    background-color: #ffffff;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
