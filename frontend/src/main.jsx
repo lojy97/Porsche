@@ -55,6 +55,9 @@ function App() {
               <li className={`nav-item ${currentPage === 'product' ? 'active' : ''}`}>
                 <button className="nav-link" onClick={() => handleNavigation('product')}>Browse</button>
               </li>
+              <li className={`nav-item ${currentPage === 'adminproduct' ? 'active' : ''}`}>
+                <button className="nav-link" onClick={() => handleNavigation('adminproduct')}>AdminProduct</button>
+              </li>
             </ul>
           </div>
         </div>
@@ -111,6 +114,7 @@ function App() {
       {currentPage === 'product' && <Products />}
       {currentPage === 'login' && <Login />}
       {currentPage === 'register' && <Register />}
+      {currentPage === 'adminproduct' && <AdminsProject />}
       
     </div>
   );
@@ -118,6 +122,6 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AdminsProject />cd
+    <App/>
   </React.StrictMode>
 );
