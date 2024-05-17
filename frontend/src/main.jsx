@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
  import Home from './Home.jsx';
  import About from './About.jsx';
  import Contact from './Contact.jsx';
-//import Profile from './profile.jsx';
+import Login from './Login.jsx';
+import Profile from './profile.jsx';
 import Products from './Products.jsx';
-//import './About.css';
-//import './Contact.css';
-//import './Profile.css';
+import Register from './register.jsx';
+
 import './App.css'; // Add a CSS file to style the navbar buttons
 
 function App() {
@@ -48,8 +48,8 @@ function App() {
               <li className={`nav-item ${currentPage === 'contact' ? 'active' : ''}`}>
                 <button className="nav-link" onClick={() => handleNavigation('contact')}>Contact</button>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/HTML/login.html">Login</a>
+              <li className={`nav-item ${currentPage === 'login' ? 'active' : ''}`}>
+                <button className="nav-link" onClick={() => handleNavigation('login')}>Login</button>
               </li>
               <li className={`nav-item ${currentPage === 'product' ? 'active' : ''}`}>
                 <button className="nav-link" onClick={() => handleNavigation('product')}>Browse</button>
@@ -90,8 +90,16 @@ function App() {
           </li>
         </ul>
         <div className="sidebar-footer">
-          <a href="login.html"><i className="bi bi-door-open"></i> Login</a>
-          <a href="/HTML/register.html"><i className="bi bi-person-plus"></i> Sign Up</a>
+        <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('login')}>
+              <i className="bi bi-house-door"></i> Login
+            </button>
+          </li>
+          <li className="item">
+            <button className="nav-link" onClick={() => handleNavigation('register')}>
+              <i className="bi bi-house-door"></i> Sign up
+            </button>
+          </li>
         </div>
       </div>
 
@@ -100,12 +108,15 @@ function App() {
       {currentPage === 'contact' && <Contact />}
       {currentPage === 'profile' && <Profile />}
       {currentPage === 'product' && <Products />}
+      {currentPage === 'login' && <Login />}
+      {currentPage === 'register' && <Register />}
+      
     </div>
   );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <App/>
   </React.StrictMode>
 );

@@ -1,92 +1,41 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const backend_url = "http://localhost:3000/api/v1";
+import React from 'react';
+import styles from './register.module.css'; // Import the CSS module
 
 function Register() {
-  const [formData, setFormData] = useState({
-    Name: '',
-    Email: '',
-    Address: '',
-    Password: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${backend_url}/CustRegister`, formData);
-      // Redirect or show success message
-    } catch (error) {
-      console.error('Registration error:', error);
-      // Handle error (e.g., show error message)
-    }
+  const registerAndRedirect = async () => {
+    // Your registration logic here
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row justify-content-end">
-        <div className="col-md-4">
-          <div className="login-form">
-            <h2 className="mb-4">Register</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="Name" className="form-label">Name:</label>
-                <input
-                  type="text"
-                  id="Name"
-                  name="Name"
-                  className="form-control"
-                  value={formData.Name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="Email" className="form-label">Email:</label>
-                <input
-                  type="email"
-                  id="Email"
-                  name="Email"
-                  className="form-control"
-                  value={formData.Email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="Password" className="form-label">Password:</label>
-                <input
-                  type="password"
-                  id="Password"
-                  name="Password"
-                  className="form-control"
-                  value={formData.Password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="Address" className="form-label">Address:</label>
-                <input
-                  type="text"
-                  id="Address"
-                  name="Address"
-                  className="form-control"
-                  value={formData.Address}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="login-info">
-                <p>Already have an account? <a href="/HTML/login.html">Login here</a></p>
-                <button type="submit" className="btn btn-primary">Register</button>
-              </div>
-            </form>
+    <div className={styles.container} style={{backgroundImage: `url('/photos gt3/final pic.png')`}}>
+      <div className={`${styles.row} justify-content-end`}>
+        <div className={`col-md-4 ${styles.col}`}>
+          <div className={styles.loginForm}>
+            <h2 className={`${styles.heading} mb-4`}>Register</h2>
+            <div className={`${styles.mb} mb-3`}>
+              <label htmlFor="firstName" className={`${styles.label} form-label`}>First Name:</label>
+              <input type="text" id="firstName" name="firstName" className={`${styles.input} form-control`} required />
+            </div>
+            <div className={`${styles.mb} mb-3`}>
+              <label htmlFor="lastName" className={`${styles.label} form-label`}>Last Name:</label>
+              <input type="text" id="lastName" name="lastName" className={`${styles.input} form-control`} required />
+            </div>
+            <div className={`${styles.mb} mb-3`}>
+              <label htmlFor="email" className={`${styles.label} form-label`}>Email:</label>
+              <input type="email" id="email" name="email" className={`${styles.input} form-control`} required />
+            </div>
+            <div className={`${styles.mb} mb-3`}>
+              <label htmlFor="password" className={`${styles.label} form-label`}>Password:</label>
+              <input type="password" id="password" name="password" className={`${styles.input} form-control`} required />
+            </div>
+            <div className={`${styles.mb} mb-3`}>
+              <label htmlFor="address" className={`${styles.label} form-label`}>Address:</label>
+              <input type="text" id="address" name="address" className={`${styles.input} form-control`} required />
+            </div>
+            <div className={`${styles.loginInfo} login-info`}>
+              <p>Already have an account? <a href="/HTML/login.html">Login here</a></p>
+              <button type="button" className={`${styles.button} btn btn-primary`} onClick={registerAndRedirect}>Register</button>
+            </div>
           </div>
         </div>
       </div>
