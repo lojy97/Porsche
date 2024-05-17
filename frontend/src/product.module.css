@@ -1,0 +1,89 @@
+.products {
+  background-image: none;
+}
+
+.card-img-top:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: dark;
+  z-index: 1000;
+}
+
+.main-content {
+  margin-top: 60px;
+}
+
+.navbar-brand-img {
+  width: 150px;
+  height: auto;
+}
+
+#productContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  width: 100%;
+}
+
+/* Added style for message */
+.message-section {
+  display: none; /* Hide by default */
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #dff0d8; /* Success message background color */
+  border: 1px solid #d0e9c6; /* Success message border */
+  color: #3c763d; /* Success message text color */
+}
+
+.header {
+  background: linear-gradient(to right, #c976eb , #80acee, #464646);
+  padding: 20px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+  text-align: center;
+}
+
+.animated-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #17161d;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tc {
+  margin-bottom: 20px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  z-index: 1;
+  background-color: #464646;
+  overflow-y: auto;
+  transition: right 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar.active {
+  right: 0;
+}

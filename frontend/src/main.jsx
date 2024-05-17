@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Home from './Home.jsx';
-import About from './About.jsx';
-import Contact from './Contact.jsx';
-import Profile from './profile.jsx';
-import './Home.css';
-import './About.css';
-import './Contact.css';
-import './Profile.css';
+ import Home from './Home.jsx';
+ import About from './About.jsx';
+ import Contact from './Contact.jsx';
+//import Profile from './profile.jsx';
+import Products from './Products.jsx';
+//import './About.css';
+//import './Contact.css';
+//import './Profile.css';
 import './App.css'; // Add a CSS file to style the navbar buttons
 
 function App() {
@@ -51,8 +51,8 @@ function App() {
               <li className="nav-item">
                 <a className="nav-link" href="/HTML/login.html">Login</a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/HTML/products.html">Browse</a>
+              <li className={`nav-item ${currentPage === 'product' ? 'active' : ''}`}>
+                <button className="nav-link" onClick={() => handleNavigation('product')}>Browse</button>
               </li>
             </ul>
           </div>
@@ -99,6 +99,7 @@ function App() {
       {currentPage === 'about' && <About />}
       {currentPage === 'contact' && <Contact />}
       {currentPage === 'profile' && <Profile />}
+      {currentPage === 'product' && <Products />}
     </div>
   );
 }
