@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const customerModel = require("../models/customerModel.js");
 const adminModel = require("../models/adminModel.js");
 const bcrypt = require("bcrypt");
+const authenticationMiddleware = require('../middleware/authentication');
+const authorizationMiddleware = require('../middleware/authorization');
 
 const { MongoClient } = require("mongodb"); // Import MongoClient
 
@@ -107,50 +109,55 @@ const authController = {
     },
 
     adminRegister: async (req, res) => {
-        try {
-            await client.connect();
-            console.log("Connected to MongoDB!");
+        authenticationMiddleware(['admin'])(req, res, async () => {
+            // Authorization middleware
+            authorizationMiddleware(['admin'])(req, res, async () => {
+                try {
+                    await client.connect();
+                    console.log("Connected to MongoDB!");
     
-            const database = client.db("PorcheWeb");
-            const collection = database.collection("Admins");
+                    const database = client.db("PorcheWeb");
+                    const collection = database.collection("Admins");
     
-            const lastAdmin = await collection.find().sort({ AdminID: -1 }).limit(1).toArray();
-            let lastAdminId = 0;
-            if (lastAdmin.length > 0) {
-                lastAdminId = lastAdmin[0].AdminID;
-            }
+                    const lastAdmin = await collection.find().sort({ AdminID: -1 }).limit(1).toArray();
+                    let lastAdminId = 0;
+                    if (lastAdmin.length > 0) {
+                        lastAdminId = lastAdmin[0].AdminID;
+                    }
     
-            const { Name, Email, Password } = req.body;
-            const newAdminId = lastAdminId + 1;
+                    const { Name, Email, Password } = req.body;
+                    const newAdminId = lastAdminId + 1;
     
-            // Hash the password with 10 rounds of salt
-            const hashedPassword = await bcrypt.hash(Password, 10);
+                    // Hash the password with 10 rounds of salt
+                    const hashedPassword = await bcrypt.hash(Password, 10);
     
-            const newAdmin = {
-                AdminID: newAdminId,
-                Name,
-                Email,
-                Password: hashedPassword,
-                role: 'admin'
-            };
+                    const newAdmin = {
+                        AdminID: newAdminId,
+                        Name,
+                        Email,
+                        Password: hashedPassword,
+                        role: 'admin'
+                    };
     
-            await collection.insertOne(newAdmin);
+                    await collection.insertOne(newAdmin);
     
-            const payload = {
-                adminId: newAdmin.AdminID,
-                email: newAdmin.Email,
-                role: newAdmin.role
-            };
-            
-            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+                    const payload = {
+                        adminId: newAdmin.AdminID,
+                        email: newAdmin.Email,
+                        role: newAdmin.role
+                    };
     
-            res.status(201).json({ message: "Admin added successfully", adminId: newAdmin.AdminID });
-        } catch (error) {
-            console.error("Error adding admin:", error);
-            res.status(500).json({ message: "Internal server error" });
-        } finally {
-            await client.close();
-        }
+                    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    
+                    res.status(201).json({ message: "Admin added successfully", adminId: newAdmin.AdminID });
+                } catch (error) {
+                    console.error("Error adding admin:", error);
+                    res.status(500).json({ message: "Internal server error" });
+                } finally {
+                    await client.close();
+                }
+            });
+        });
     }
     ,
     adminLogin: async (req, res) => {
@@ -190,7 +197,7 @@ const authController = {
         // Clear the JWT cookie
         res.clearCookie('jwt', { httpOnly: true });
         res.status(200).json({ message: "Logout successful" });
-    }
+    },
     
 
 };

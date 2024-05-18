@@ -8,6 +8,7 @@ import Login from './Login.jsx';
 import Profile from './profile.jsx';
 import Products from './Products.jsx';
 import Register from './register.jsx';
+import AdminProfile from './AdminProfile.jsx';
 
 import './App.css'; // Add a CSS file to style the navbar buttons
 
@@ -127,6 +128,7 @@ function App() {
       {currentPage === 'login' && <Login onLoginSuccess={handleLoginSuccess} />}
       {currentPage === 'register' && <Register handleRegisterSuccess={handleRegisterSuccess} />}
       {currentPage === 'adminproduct' && <AdminsProject />}
+      {currentPage === 'adminprofile' && <AdminProfile />}
       
     </div>
   );
