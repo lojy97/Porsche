@@ -1,208 +1,184 @@
+require('dotenv').config();
+
 const jwt = require("jsonwebtoken");
 const customerModel = require("../models/customerModel.js");
 const adminModel = require("../models/adminModel.js");
 const bcrypt = require("bcrypt");
-require('dotenv').config();
+
+const { MongoClient } = require("mongodb"); // Import MongoClient
+
+
+const client = new MongoClient(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 const authController = {
     customerRegister: async (req, res) => {
         try {
-            // Connect the client to the server
             await client.connect();
             console.log("Connected to MongoDB!");
 
-            // Access a specific database
             const database = client.db("PorcheWeb");
-
-            // Access the "Customers" collection within the database
             const collection = database.collection("Customers");
 
-            // Find the last customer document to get the last CustomerID
             const lastCustomer = await collection.find().sort({ CustomerID: -1 }).limit(1).toArray();
             let lastCustomerId = 0;
             if (lastCustomer.length > 0) {
                 lastCustomerId = lastCustomer[0].CustomerID;
             }
 
-            // Extract customer data from the request body
             const { Name, Email, Address, Password } = req.body;
 
-            // Increment the last CustomerID by 1 to get the new CustomerID
-            const newCustomerId = lastCustomerId + 1;
-            const hashedPassword = await bcrypt.hash(Password, 10); // Fixed variable name and used correct casing
+            // Validate input data
+            if (!Name || !Email || !Address || !Password) {
+                return res.status(400).json({ message: "All fields are required" });
+            }
 
-            // Create a new customer document
+            const newCustomerId = lastCustomerId + 1;
+            const hashedPassword = await bcrypt.hash(Password, 10);
+
             const newCustomer = {
                 CustomerID: newCustomerId,
-                Name: Name, 
-                Email: Email, 
-                Address: Address, 
-                Password: hashedPassword
+                Name,
+                Email,
+                Address,
+                Password: hashedPassword,
+                role: 'customer'
             };
 
-            // Insert customer document into the collection
             await collection.insertOne(newCustomer);
 
             const payload = {
                 customerId: newCustomer.CustomerID,
-                email: newCustomer.Email
+                email: newCustomer.Email,
+                role: newCustomer.role
             };
-            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
+            console.log('SECRET_KEY:', process.env.SECRET_KEY);
 
-            // Send a success response
-            res.status(201).json({ message: "Customer added successfully", customerId: newCustomer.CustomerID });
+            // Ensure SECRET_KEY is loaded from environment variables
+            if (!process.env.SECRET_KEY) {
+                throw new Error("SECRET_KEY is not defined in environment variables");
+            }
+
+            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+            res.status(201).json({ message: "Customer added successfully", customerId: newCustomer.CustomerID, token: token });
         } catch (error) {
-            // Handle errors
-            console.error("Error adding customer:", error);
+            console.error("Error adding customer:", error.message);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
     },
     customerLogin: async (req, res) => {
-        const name = req.body.Name;
-        const password = req.body.Password;
+        const { Name, Password } = req.body;
         try {
-            // Connect to MongoDB
             await client.connect();
             console.log("Connected to MongoDB!");
-
-            // Access the specific database
+    
             const database = client.db("PorcheWeb");
-
-            // Access the "Customers" collection within the database
             const collection = database.collection("Customers");
-
-            // Find the user by name (assuming 'name' is unique)
-            const user = await collection.findOne({ Name: name });
-            console.log(user);
+    
+            const user = await collection.findOne({ Name });
             if (!user) {
-                // If user not found, send error response
                 return res.status(401).json({ auth: false, message: 'User not found.' });
             }
-
-            // Compare the provided password with the stored hashed password
-            const validPassword = await bcrypt.compare(password, user.Password); // Used await for bcrypt.compare()
-
+    
+            const validPassword = await bcrypt.compare(Password, user.Password);
             if (!validPassword) {
-                // If password is invalid, send error response
                 return res.status(401).json({ auth: false, message: 'Invalid password.' });
             }
-
-            const accessToken = jwt.sign({ name: user.Name, email: user.Email }, process.env.ACCESS_TOKEN_SECRET); // Fixed jwt.sign()
-
+    
+            const payload = { name: user.Name, email: user.Email, role: user.role };  // Add role to payload
+            const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    
             res.cookie('jwt', accessToken, { httpOnly: true });
             res.cookie('info', user, { httpOnly: true });
-
-            // Send success response with the generated token
+    
             res.status(200).json({ auth: true, token: accessToken });
         } catch (error) {
-            // Handle errors
             console.error("Error during login:", error.message);
             res.status(500).json({ auth: false, message: "Internal server error" });
         } finally {
-            // Close the MongoDB connection
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
-    },
+    }
+    ,
 
     adminRegister: async (req, res) => {
         try {
-            // Connect the client to the server
             await client.connect();
             console.log("Connected to MongoDB!");
-
-            // Access a specific database
+    
             const database = client.db("PorcheWeb");
-
-            // Access the "Admins" collection within the database
             const collection = database.collection("Admins");
-
-            // Find the last admin document to get the last AdminID
+    
             const lastAdmin = await collection.find().sort({ AdminID: -1 }).limit(1).toArray();
             let lastAdminId = 0;
             if (lastAdmin.length > 0) {
                 lastAdminId = lastAdmin[0].AdminID;
             }
-
-            // Extract admin data from the request body
+    
             const { Name, Email, Password } = req.body;
-
-            // Increment the last AdminID by 1 to get the new AdminID
             const newAdminId = lastAdminId + 1;
-            const hashedPassword = await bcrypt.hash(Password, 10); // Fixed variable name and used correct casing
-
-            // Create a new admin document
+            const hashedPassword = await bcrypt.hash(Password, 10);
+    
             const newAdmin = {
                 AdminID: newAdminId,
-                Name: Name, // Fixed variable name and used correct casing
-                Email: Email, // Fixed variable name and used correct casing
-                Password: hashedPassword
+                Name,
+                Email,
+                Password: hashedPassword,
+                role: 'admin'  // Add role field
             };
-
-            // Insert admin document into the collection
+    
             await collection.insertOne(newAdmin);
-
+    
             const payload = {
                 adminId: newAdmin.AdminID,
-                email: newAdmin.Email
+                email: newAdmin.Email,
+                role: newAdmin.role  // Add role to payload
             };
-            const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
-
-            // Send a success response
+            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    
             res.status(201).json({ message: "Admin added successfully", adminId: newAdmin.AdminID });
         } catch (error) {
-            // Handle errors
             console.error("Error adding admin:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
             await client.close();
         }
-    },
+    }
+    ,
     adminLogin: async (req, res) => {
-        const name = req.body.Name;
-        const password = req.body.Password;
+        const { Name, Password } = req.body;
         try {
-            // Connect the client to the server
             await client.connect();
             console.log("Connected to MongoDB!");
-
-            // Access a specific database
+    
             const database = client.db("PorcheWeb");
-
-            // Access the "Admins" collection within the database
             const collection = database.collection("Admins");
-
-            // Find the admin document with the given name
-            const admin = await collection.findOne({ Name: name });
-
-            // Check if the admin exists
-            if (admin) {
-                // Compare the given password with the hashed password
-                const validPassword = await bcrypt.compare(password, admin.Password);
-                if (validPassword) {
-                    const payload = {
-                        adminId: admin.AdminID,
-                        email: admin.Email
-                    };
-                    const token = jwt.sign(payload, 'secretK', { expiresIn: '1h' });
-                    res.status(200).json({ message: "Login successful", token: token });
-                } else {
-                    res.status(401).json({ message: "Invalid credentials" });
-                }
-            } else {
-                res.status(404).json({ message: "Admin not found" });
+    
+            const admin = await collection.findOne({ Name });
+            if (!admin) {
+                return res.status(404).json({ message: "Admin not found" });
             }
+    
+            const validPassword = await bcrypt.compare(Password, admin.Password);
+            if (!validPassword) {
+                return res.status(401).json({ message: "Invalid credentials" });
+            }
+    
+            const payload = { adminId: admin.AdminID, email: admin.Email, role: admin.role };  // Add role to payload
+            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    
+            res.status(200).json({ message: "Login successful", token: token });
         } catch (error) {
-            // Handle errors
             console.error("Error logging in admin:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
             await client.close();
         }
     }

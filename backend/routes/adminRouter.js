@@ -6,15 +6,15 @@ const adminController = require("../controllers/adminController");
 const authorizationMiddleware = require('../middleware/authorization');
 
 // Get all admins
-router.get("/", authorizationMiddleware(['admin']), adminController.getAdmins);
+router.get("/getAdmins", authorizationMiddleware(['admin']), adminController.getAdmins);
 
 // Get one admin
-router.get("/:id", authorizationMiddleware(['admin']), adminController.getSpecificAdmin);
+router.get("/GetAdmin:id", authorizationMiddleware(['admin']), adminController.getSpecificAdmin);
 
 // Update one admin
-router.put("/:id", authorizationMiddleware(['admin', 'customer']), adminController.editAdmin); // Corrected function name
+router.put("/UpdateAdmin:id", authorizationMiddleware(['admin', 'customer']), adminController.editAdmin); // Corrected function name
 
 // Delete one admin
-router.delete("/:id", authorizationMiddleware(['admin']), adminController.deleteAdmin);
+router.delete("/DeleteAdmin:id", authorizationMiddleware(['admin']), adminController.deleteAdmin);
 
 module.exports = router;

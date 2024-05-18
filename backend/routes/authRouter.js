@@ -1,20 +1,13 @@
-// authRouter.js
+// routes/authRouter.js
 
 const express = require("express");
 const router = express.Router();
-const authController = require("../controllers/authController"); // Fix import
-const authorizationMiddleware = require('../middleware/authorization');
+const authController = require("../controllers/authController");
 
-// Customer Login
-router.post("/CustLogin", authorizationMiddleware(['customer']), authController.customerLogin); // Use authController
-
-// Customer Register
-router.post("/CustRegister", authorizationMiddleware(['customer']), authController.customerRegister); // Use authController
-
-// Admin Login
-router.post("/AdminLogin", authorizationMiddleware(['admin']), authController.adminLogin); // Use authController
-
-// Admin Register
-router.post("/AdminRegister", authorizationMiddleware(['admin']), authController.adminRegister); // Use authController
+// Public routes
+router.post("/CustLogin", authController.customerLogin);
+router.post("/CustRegister", authController.customerRegister);
+router.post("/AdminLogin", authController.adminLogin);
+router.post("/AdminRegister", authController.adminRegister);
 
 module.exports = router;
