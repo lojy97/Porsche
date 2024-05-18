@@ -47,48 +47,6 @@ const customerController = {
         }
     },
 
-    editCustomer: async (req, res) => {
-        let connection;
-        try {
-            console.log("Received PATCH request");
-            const customerId = parseInt(req.params.customerId);
-            console.log("Customer ID:", customerId);
-            console.log("Request Body:", req.body);
-
-            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
-                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
-                    await client.connect();
-                    console.log("Connected to MongoDB!");
-
-                    const database = client.db("PorcheWeb");
-                    const collection = database.collection("Customers");
-
-                    const updateQuery = {
-                        $set: {
-                            Name: req.body.name,
-                            Email: req.body.email,
-                            Address: req.body.address
-                        }
-                    };
-
-                    const result = await collection.updateOne({ CustomerID: customerId }, updateQuery);
-
-                    if (result.modifiedCount === 1) {
-                        res.status(200).json({ message: `Customer with CustomerID ${customerId} updated successfully` });
-                    } else {
-                        res.status(404).json({ message: `Customer with CustomerID ${customerId} not found` });
-                    }
-                });
-            });
-        } catch (error) {
-            console.error("Error editing customer:", error);
-            res.status(500).json({ error: "Internal server error" });
-        } finally {
-            await client.close();
-            console.log("Connection to MongoDB closed.");
-        }
-    },
-
     getCustomer: async (req, res) => {
         let connection;
         try {
@@ -168,26 +126,33 @@ const customerController = {
         let connection;
         try {
             console.log("Received PUT request");
-            const customerId = parseInt(req.params.id);
-
             authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
                 authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
                     await client.connect();
                     console.log("Connected to MongoDB!");
-
+    
                     const database = client.db("PorcheWeb");
                     const collection = database.collection("Customers");
-
+                    let customerId;
+                    
+                    if (req.user.role === 'admin') {
+                        // If admin, extract customer ID from request body
+                        customerId = req.body.customerId;
+                    } else if (req.user.role === 'customer') {
+                        // If customer, extract customer ID from JWT payload
+                        customerId = req.user.customerId;
+                    }
+    
                     const updateQuery = {
                         $set: {
-                            Name: req.body.name,
-                            Email: req.body.email,
-                            Address: req.body.address
+                            Name: req.body.Name,
+                            Email: req.body.Email,
+                            Address: req.body.Address
                         }
                     };
-
+    
                     const result = await collection.updateOne({ CustomerID: customerId }, updateQuery);
-
+    
                     if (result.modifiedCount === 1) {
                         res.status(200).json({ message: `Customer with CustomerID ${customerId} updated successfully` });
                     } else {

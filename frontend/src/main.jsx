@@ -27,10 +27,18 @@ function App() {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
+  const handleRegisterSuccess = () => {
+    setCurrentPage('login');
+    console.log('Tomfoolery is not tolerated here!');
+};
   const handleLoginSuccess = () => {
     setCurrentPage('home');
-    console.log() // Navigate to the homepage
+    console.log('it has been run') // Navigate to the homepage
   };
+  const handleSignOutSuccess = () => {
+    setCurrentPage('home');
+    console.log('running it back'); // Optional: Add actual navigation logic
+};
 
   return (
     <div>
@@ -114,10 +122,10 @@ function App() {
       {currentPage === 'home' && <Home />}
       {currentPage === 'about' && <About />}
       {currentPage === 'contact' && <Contact />}
-      {currentPage === 'profile' && <Profile />}
+      {currentPage === 'profile' && <Profile onSignOutSuccess={handleSignOutSuccess}/>}
       {currentPage === 'product' && <Products />}
       {currentPage === 'login' && <Login onLoginSuccess={handleLoginSuccess} />}
-      {currentPage === 'register' && <Register />}
+      {currentPage === 'register' && <Register handleRegisterSuccess={handleRegisterSuccess} />}
       {currentPage === 'adminproduct' && <AdminsProject />}
       
     </div>
