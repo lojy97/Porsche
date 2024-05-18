@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 
 router.get("/GetAll", customerController.getAllCustomers);
 
-router.get("/Get/:id", customerController.getCustomer);
+router.get("/Get", customerController.getCustomer);
 
 router.put("/Update/:id", customerController.updateCustomer);
 

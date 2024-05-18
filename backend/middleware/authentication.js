@@ -21,7 +21,12 @@ module.exports = function authenticationMiddleware(allowedRoles) {
                 return res.status(403).json({ message: "Access forbidden: Insufficient rights" });
             }
 
-            req.user = decoded;
+            // Extract customer ID from the decoded JWT token and attach it to req.user
+            req.user = {
+                ...decoded,
+                customerId: decoded.customerId // Assuming customerId is present in the JWT payload
+            };
+            
             next();
         });
     };

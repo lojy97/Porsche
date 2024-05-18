@@ -96,28 +96,43 @@ const customerController = {
             authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
                 // Authorization middleware
                 authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
-                    await client.connect();
-                    console.log("Connected to MongoDB!");
-
-                    const database = client.db("PorcheWeb");
-                    const collection = database.collection("Customers");
-
-                    const customerId = parseInt(req.params.customerId);
-                    const customer = await collection.findOne({ CustomerID: customerId });
-
-                    if (customer) {
-                        res.status(200).json(customer);
-                    } else {
-                        res.status(404).json({ message: `Customer with CustomerID ${customerId} not found` });
+                    try {
+                        await client.connect();
+                        console.log("Connected to MongoDB!");
+    
+                        const database = client.db("PorcheWeb");
+                        const collection = database.collection("Customers");
+                        let customerId;
+                        if (req.user.role === 'admin') {
+                            // If admin, extract customer ID from request body
+                            customerId = req.body.customerId;
+                        } else if (req.user.role === 'customer') {
+                            // If customer, extract customer ID from JWT payload
+                            customerId = req.user.customerId;
+                        }
+    
+                        // Extract customer ID from the JWT payload
+                        console.log("Customer ID:", customerId);
+    
+                        const customer = await collection.findOne({ CustomerID: customerId });
+    
+                        if (customer) {
+                            res.status(200).json(customer);
+                        } else {
+                            res.status(404).json({ message: `Customer with CustomerID ${customerID} not found` });
+                        }
+                    } catch (error) {
+                        console.error("Error getting customer:", error);
+                        res.status(500).json({ message: "Internal server error" });
+                    } finally {
+                        await client.close();
+                        console.log("Connection to MongoDB closed.");
                     }
                 });
             });
         } catch (error) {
-            console.error("Error getting customer:", error);
+            console.error("Error authenticating/authorizing:", error);
             res.status(500).json({ message: "Internal server error" });
-        } finally {
-            await client.close();
-            console.log("Connection to MongoDB closed.");
         }
     },
 
