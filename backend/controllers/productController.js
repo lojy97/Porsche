@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 const jwt = require("jsonwebtoken");
 const productModel = require("../models/productModel.js");
 const bcrypt = require("bcrypt");
 const { get } = require("mongoose");
-require('dotenv').config();
+
 
 const productController = {
     addProduct: async (req, res) => {

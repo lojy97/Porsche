@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 
 const { MongoClient } = require("mongodb"); // Import MongoClient
 
-
 const client = new MongoClient(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -94,8 +93,8 @@ const authController = {
             const payload = { name: user.Name, email: user.Email, role: user.role };  // Add role to payload
             const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     
+            // Set the JWT token in a cookie
             res.cookie('jwt', accessToken, { httpOnly: true });
-            res.cookie('info', user, { httpOnly: true });
     
             res.status(200).json({ auth: true, token: accessToken });
         } catch (error) {
@@ -105,8 +104,7 @@ const authController = {
             await client.close();
             console.log("Connection to MongoDB closed.");
         }
-    }
-    ,
+    },
 
     adminRegister: async (req, res) => {
         try {
@@ -124,6 +122,8 @@ const authController = {
     
             const { Name, Email, Password } = req.body;
             const newAdminId = lastAdminId + 1;
+    
+            // Hash the password with 10 rounds of salt
             const hashedPassword = await bcrypt.hash(Password, 10);
     
             const newAdmin = {
@@ -131,7 +131,7 @@ const authController = {
                 Name,
                 Email,
                 Password: hashedPassword,
-                role: 'admin'  // Add role field
+                role: 'admin'
             };
     
             await collection.insertOne(newAdmin);
@@ -139,8 +139,9 @@ const authController = {
             const payload = {
                 adminId: newAdmin.AdminID,
                 email: newAdmin.Email,
-                role: newAdmin.role  // Add role to payload
+                role: newAdmin.role
             };
+            
             const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     
             res.status(201).json({ message: "Admin added successfully", adminId: newAdmin.AdminID });
@@ -174,6 +175,9 @@ const authController = {
             const payload = { adminId: admin.AdminID, email: admin.Email, role: admin.role };  // Add role to payload
             const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     
+            // Set the token in a cookie
+            res.cookie('jwt', token, { httpOnly: true }); // Set the cookie named 'jwt' with the token
+    
             res.status(200).json({ message: "Login successful", token: token });
         } catch (error) {
             console.error("Error logging in admin:", error);
@@ -182,6 +186,7 @@ const authController = {
             await client.close();
         }
     }
+    
 
 };
 module.exports = authController;

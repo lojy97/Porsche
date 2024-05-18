@@ -1,5 +1,3 @@
-// adminRouter.js
-
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
@@ -9,12 +7,12 @@ const authorizationMiddleware = require('../middleware/authorization');
 router.get("/getAdmins", authorizationMiddleware(['admin']), adminController.getAdmins);
 
 // Get one admin
-router.get("/GetAdmin:id", authorizationMiddleware(['admin']), adminController.getSpecificAdmin);
+router.get("/getAdmin/:id", authorizationMiddleware(['admin']), adminController.getSpecificAdmin);
 
 // Update one admin
-router.put("/UpdateAdmin:id", authorizationMiddleware(['admin', 'customer']), adminController.editAdmin); // Corrected function name
+router.put("/updateAdmin/:id", authorizationMiddleware(['admin']), adminController.editAdmin);
 
 // Delete one admin
-router.delete("/DeleteAdmin:id", authorizationMiddleware(['admin']), adminController.deleteAdmin);
+router.delete("/deleteAdmin/:id",adminController.deleteAdmin);
 
 module.exports = router;

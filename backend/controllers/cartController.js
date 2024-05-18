@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 const jwt = require("jsonwebtoken");
 const cartModel = require("../models/cartModel.js");
 const bcrypt = require("bcrypt");
 const { get } = require("mongoose");
-require('dotenv').config();
+
 
 const cartController = {
     addToCart: async (req, res) => {

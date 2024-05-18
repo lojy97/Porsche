@@ -1,11 +1,18 @@
+require('dotenv').config();
+
 const jwt = require("jsonwebtoken");
 const adminModel = require("../models/adminModel.js");
 const bcrypt = require("bcrypt");
-require('dotenv').config();
+const { MongoClient } = require("mongodb"); // Import MongoClient
 
+const client = new MongoClient(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 const adminController = {
     
     deleteAdmin: async (req, res) => {
+        console.log("delete admin");
         try {
             // Connect the client to the server
             await client.connect();

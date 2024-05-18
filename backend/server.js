@@ -12,7 +12,7 @@ const cartRouter = require("./routes/cartRouter");
 const orderRouter = require("./routes/orderRouter");
 
 
-const authenticationMiddleware = require("./middleware/authentication");
+//const authenticationMiddleware = require("./middleware/authentication");
 const cors = require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,14 +28,16 @@ app.use(
 );
 
 
-
+//public route
 app.use("/api/v1", authRouter);
-app.use(authenticationMiddleware);
-app.use("/api/v1/product", productRouter);
+
+//require authentication
+ //app.use(authenticationMiddleware);
+//app.use("/api/v1/product", productRouter);
 app.use("/api/v1/customer", customerRouter);
-app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/cart", cartRouter);
-app.use("/api/v1/order", orderRouter);
+//app.use("/api/v1/admin", adminRouter);
+//app.use("/api/v1/cart", cartRouter);
+//app.use("/api/v1/order", orderRouter);
 
 const db_name = process.env.DB_NAME;
 

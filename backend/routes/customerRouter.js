@@ -1,20 +1,18 @@
-// customerRouter.js
-
 const express = require("express");
 const router = express.Router();
 const customerController = require("../controllers/customerController");
-const authorizationMiddleware = require('../middleware/authorization');
 
-// * Get all customers
-router.get("/", authorizationMiddleware(['admin']), customerController.getAllCustomers);
+router.use((req, res, next) => {
+  console.log("Customer route accessed");
+  next();
+});
 
-// * Get one customer
-router.get("/:id", authorizationMiddleware(['admin', 'customer']), customerController.getCustomer);
+router.get("/GetAll", customerController.getAllCustomers);
 
-// * Update one user
-router.put("/:id", authorizationMiddleware(['admin', 'customer']), customerController.updateCustomer);
+router.get("/Get/:id", customerController.getCustomer);
 
-// * Delete one user
-router.delete("/:id", authorizationMiddleware(['admin', 'customer']), customerController.deleteCustomer);
+router.put("/Update/:id", customerController.updateCustomer);
+
+router.delete("/deleteCustomer/:customerId", customerController.deleteCustomer);
 
 module.exports = router;
