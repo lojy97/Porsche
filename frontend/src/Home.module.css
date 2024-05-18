@@ -1,156 +1,174 @@
-.container {
-  background-color: black;
+
+/* Styles for the "Models" container */
+.modelsContainer {
+  position: absolute; /* Positioned absolute */
+  top: calc(100vh + 10px); /* Positioned below the video */
+  left: 0; /* Positioned at the left */
+  width: 100%; /* Full width */
+  background-color: black; /* Black background */
+  padding: 20px 0; /* Padding around the text */
+  text-align: center; /* Center-aligned text */
+  z-index: 1001; /* Stack above other elements */
 }
 
-.car1 {
-  height: 25%;
+/* Styles for the "Models" text */
+.modelsText {
+  left: 10%; /* Positioned at the left */
+  font-size: 2rem; /* Font size */
+  color: white; /* Text color */
+  margin: 0; /* No margin */
 }
 
-.car1 video {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
+.carlos {
+  position: relative; /* Position relative for container */
 }
 
-.fs-1 {
-  font-size: 7rem !important;
-  color: white; /* Set text color to white */
-  margin-left: 100px !important;
-  text-shadow: 2px 2px 4px black;
+.carlos .words {
+  position: absolute; /* Position absolute for car name */
+  bottom: -20px; /* Positioned at the bottom */
+  left: 15%; /* Positioned at the center horizontally */
+  transform: translateX(-50%); /* Center the text horizontally */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Font size */
+  text-shadow: 2px 2px 4px black; /* Text shadow effect */
+  text-align: center; /* Center-aligned text */
 }
 
-.fw-bold {
-  font-weight: bold !important;
+.carlo2 {
+  position: relative; /* Position relative for container */
 }
 
-.words {
-  font-size: 2rem !important;
-  margin-left: 100px !important;
-  margin-right: 100px !important;
-  color: white; /* Set text color to white */
-  text-shadow: 2px 2px 4px black;
+.carlo2 .words {
+  position: absolute; /* Position absolute for car name */
+  bottom: -20px; /* Positioned at the bottom */
+  left: 15%; /* Positioned at the center horizontally */
+  transform: translateX(-50%); /* Center the text horizontally */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Font size */
+  text-shadow: 2px 2px 4px black; /* Text shadow effect */
+  text-align: center; /* Center-aligned text */
 }
 
-.carlos,
-.carlo2,
-.carlo3,
+.carlo3 {
+  position: relative; /* Position relative for container */
+}
+
+.carlo3 .words {
+  position: absolute; /* Position absolute for car name */
+  bottom: -20px; /* Positioned at the bottom */
+  left: 15%; /* Positioned at the center horizontally */
+  transform: translateX(-50%); /* Center the text horizontally */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Font size */
+  text-shadow: 2px 2px 4px black; /* Text shadow effect */
+  text-align: center; /* Center-aligned text */
+}
+
 .carlo4 {
-  height: 25%;
-  width: 100%;
-  background-color: black; /* Set the background color to black */
+  position: relative; /* Position relative for container */
+  }
+
+.carlo4 .words {
+  position: absolute; /* Position absolute for car name */
+  bottom: -20px; /* Positioned at the bottom */
+  left: 34%; /* Positioned at the center horizontally */
+  transform: translateX(-50%); /* Center the text horizontally */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Font size */
+  text-shadow: 2px 2px 4px black; /* Text shadow effect */
+  text-align: center; /* Center-aligned text */
+}
+/* Words styles */
+.words {
+  font-size: 2rem !important; /* Font size */
+  color: white; /* Text color */
+  text-shadow: 2px 2px 4px black; /* Text shadow effect */
+  position: absolute; /* Positioned absolute */
+  bottom: -30px; /* Positioned at the bottom, adjust as needed */
+  left: 50%; /* Positioned at the center horizontally */
+  transform: translateX(-50%); /* Center the text horizontally */
+  text-align: center; /* Center-aligned text */
 }
 
-.carlos img,
-.carlo2 img,
-.carlo3 img,
-.carlo4 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensure the images cover the entire div */
-}
-
-.navbar {
-  position: relative;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-.sidebar {
-  width: 150px;
-  height: 100vh;
-  position: fixed;
-  top: 0px;
-  left: -150px;
-  overflow-y: auto;
-  transition: left 0.6s ease;
-  background-color: rgba(78, 74, 74, 0.164);
-  box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
-  z-index: 999;
-  padding-top: 56px;
-}
-
-.openbtn {
-  position: fixed;
-  top: 70px;
-  left: 10px;
-  background-color: rgba(0, 0, 0, 0);
-  color: white;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
-  z-index: 1000;
-}
-
-.closebtn {
-  position: absolute;
-  color: white;
-  font-size: 20px;
-  right: 10px;
-  top: 70px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-
+/* Menu styles */
 .menu {
-  padding: 0;
-  margin: 50px 0 20px;
-  list-style: none;
+  padding: 0; /* No padding */
+  margin: 50px 0 20px; /* Margin */
+  list-style: none; /* No list style */
 }
 
-.menu .item a {
-  display: block;
-  padding: 10px 15px;
-  color: white;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+.menuItem a {
+  display: block; /* Block-level display */
+  padding: 10px 15px; /* Padding */
+  color: white; /* Text color */
+  text-decoration: none; /* No text decoration */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
-.menu .item a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.menuItem a:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Background color on hover */
 }
 
-.menu .item a i {
-  margin-top: 150px;
-  margin-right: 10px;
+.menuItem a i {
+  margin-top: 150px; /* Top margin */
+  margin-right: 10px; /* Right margin */
 }
 
-.sidebar-footer {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
-  text-align: center;
+/* Sidebar footer styles */
+.sidebarFooter {
+  position: absolute; /* Positioned absolute */
+  bottom: 10px; /* Positioned at the bottom */
+  left: 0; /* Positioned at the left */
+  width: 100%; /* Full width */
+  text-align: center; /* Center-aligned text */
 }
 
-.sidebar-footer a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  margin: 5px 0;
+.sidebarFooter a {
+  color: white; /* Text color */
+  text-decoration: none; /* No text decoration */
+  display: block; /* Block-level display */
+  margin: 5px 0; /* Margin */
 }
 
-.sidebar-footer a:hover {
-  text-decoration: underline;
+.sidebarFooter a:hover {
+  text-decoration: underline; /* Underline on hover */
 }
 
+/* Overlay styles */
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-  display: none;
+  position: fixed; /* Positioned fixed to the viewport */
+  top: 0; /* Positioned at the top */
+  left: 0; /* Positioned at the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 998; /* Stack above other elements */
+  display: none; /* Initially hidden */
 }
 
-.navbar-brand img {
-  width: 150px;
-  height: auto;
-  margin-right: 100px;
-  display: block;
+/* Video styles */
+.car1Video {
+  width: 100%; /* Full width */
+  height: 100vh; /* Full height of viewport */
+  object-fit: cover; /* Cover the container */
+}
+
+/* Navbar brand image styles */
+.navbarBrandImg {
+  width: 150px; /* Width */
+  height: auto; /* Auto height */
+  margin-right: 100px; /* Right margin */
+  display: block; /* Block-level display */
+}
+
+/* Styles for the car images */
+.carlos img, .carlo2 img, .carlo3 img, .carlo4 img {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  display: block; /* Block-level display */
+  position: relative; /* Positioned relative */
+  display: inline-block; /* Make the container inline-block */
+  vertical-align: top; /* Align the containers to the top */
+  margin: 0; /* Remove default margin */
+  margin-right: 0px; /* Adjusted margin to remove space between images */
 }
