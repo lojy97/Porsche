@@ -9,7 +9,7 @@ router.get("/GetAll", orderController.getAllOrders);
 
 // * Get one order
 // * Get one order
-router.get("/order/:id", orderController.getOrder);
+router.get("/getOrder", orderController.getOrder);
 
 // * Get a specific user's orders
 router.get("/customer/:id",  orderController.getCustomerOrders);

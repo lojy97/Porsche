@@ -13,7 +13,7 @@ const orderRouter = require("./routes/orderRouter");
 const cors = require("cors");
 app.use(cors({
   origin: 'http://localhost:5173',
-  methods: ["GET", "POST", "DELETE", "PUT"],
+  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"], // Include PATCH method
   credentials: true
 }));
 app.use((req, res, next) => {

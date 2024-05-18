@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import styles from './AdminProducts.module.css';
+import styles from './adminProducts.module.css';
 
 const products = [
   { name: "718 Boxster Style Edition", description: "Price:11 EGP", image: "/frontend/products.webp/718 Boxster Style Edition.webp" },
