@@ -1,162 +1,106 @@
-.body {
-  background-color: #f8f9fa;
-  background-image: url('/photos gt3/final pic.png');
-  background-size: 100% 100%; /* Adjusted background size */
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
-
 .container {
-  width: 100vw;
-  height: 100vh;
+  background-image: url('/photos gt3/final pic.png'); /* Set the background image */
+  background-size: cover; /* Adjusted to cover the entire container */
+  background-position: center; /* Center the background image */
+  background-color: rgba(248, 249, 250, 0.5); /* Set a semi-transparent background color */
+  backdrop-filter: blur(8px); /* Apply a blur effect to the background */
+  color: #fff; /* Set the text color to white */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  margin: 0; /* Remove any default margin */
+  padding: 20px; /* Add padding to ensure it's not too close to the edges */
+  z-index: 1; /* Ensure the container appears above the background */
 }
 
-.login-form,
-.register-info,
-.register-form {
-  background-color: darkgray;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 400px;
-  height: 680px;
+.loginForm,
+.registerInfo {
+  background-color: rgba(70, 70, 70, 1);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(70, 70, 70, 1);
+  padding: 25px; /* Adjust padding for consistency */
+  width: 100%;
+  max-width: 400px; /* Keep the maximum width */
 }
+
 
 .login-info {
-  text-align: center;
-  margin-top: 20px;
+  text-align: center; /* Center-align the login information */
+  margin-top: 40px; /* Add some space at the top */
 }
 
 @media (max-width: 767px) {
   .login-form,
   .register-info {
-    margin-right: 0;
+    margin-right: 0; /* Remove margin on smaller screens */
+    padding: 15px; /* Adjust padding for smaller screens */
   }
 }
 
 .form-label {
-  font-weight: bold;
-  color: black;
+  font-weight: bold; /* Make form labels bold */
+  color: black; /* Set the color of form labels to black */
 }
 
 .register-info,
 .login-info {
-  color: darkred;
+  color: rgb(0, 0, 0); /* Set the color of login information to dark red */
 }
 
 .form-label,
 .login-form {
-  color: black;
+  color: black; /* Set the color of form inputs to black */
 }
 
-.navbar {
-  position: relative;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
+.row {
+  width: 100%; /* Ensure the row takes full width */
+  display: flex; /* Use flexbox for child alignment */
+  justify-content: center; /* Center the content horizontally */
 }
 
-.sidebar {
-  width: 150px;
-  height: 100vh;
-  position: fixed;
-  top: 0px;
-  left: -150px;
-  overflow-y: auto;
-  transition: left 0.6s ease;
-  background-color: rgba(78, 74, 74, 0.164);
-  box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
-  z-index: 999;
-  padding-top: 56px;
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%; /* Ensure the column takes full width */
+  max-width: 400px; /* Set a maximum width for the column */
 }
 
-.openbtn {
-  position: fixed;
-  top: 70px;
-  left: 10px;
-  background-color: rgba(0, 0, 0, 0);
-  color: white;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
-  z-index: 1000;
+.mb {
+  margin-bottom: 1rem;
 }
 
-.closebtn {
-  position: absolute;
-  color: white;
-  font-size: 20px;
-  right: 10px;
-  top: 70px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-
-.menu {
-  padding: 0;
-  margin: 50px 0 20px;
-  list-style: none;
-}
-
-.menu .item a {
+.label {
   display: block;
-  padding: 10px 15px;
-  color: white;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+  margin-bottom: 0.5rem;
 }
 
-.menu .item a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.menu .item a i {
-  margin-top: 150px;
-  margin-right: 10px;
-}
-
-.sidebar-footer {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
+.input {
+  display: block;
   width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.button {
+  display: inline-block;
+  font-weight: 400;
+  color: #fff;
   text-align: center;
-}
-
-.sidebar-footer a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  margin: 5px 0;
-}
-
-.sidebar-footer a:hover {
-  text-decoration: underline;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-  display: none;
-}
-
-.navbar-brand img {
-  width: 150px;
-  height: auto;
-  margin-right: 100px;
-  display: block;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
