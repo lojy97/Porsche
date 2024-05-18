@@ -168,7 +168,6 @@
   display: block; /* Block-level display */
   position: relative; /* Positioned relative */
   display: inline-block; /* Make the container inline-block */
-  vertical-align: top; /* Align the containers to the top */
   margin: 0; /* Remove default margin */
   margin-right: 0px; /* Adjusted margin to remove space between images */
 }
