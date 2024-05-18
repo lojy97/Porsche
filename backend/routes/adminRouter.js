@@ -6,6 +6,7 @@ router.use((req, res, next) => {
     console.log("Admin route accessed");
     next();
   });
+  
 
 // Get all admins
 router.get("/getAdmins", adminController.getAdmins);

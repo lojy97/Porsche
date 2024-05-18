@@ -94,7 +94,7 @@ const authController = {
             const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     
             // Set the JWT token in a cookie
-            res.cookie('jwt', accessToken, { httpOnly: true });
+            res.cookie('jwt', accessToken, { httpOnly: true, secure: true, sameSite: 'None' });
     
             res.status(200).json({ auth: true, token: accessToken });
         } catch (error) {

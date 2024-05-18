@@ -27,6 +27,10 @@ function App() {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
+  const handleLoginSuccess = () => {
+    setCurrentPage('home');
+    console.log() // Navigate to the homepage
+  };
 
   return (
     <div>
@@ -112,7 +116,7 @@ function App() {
       {currentPage === 'contact' && <Contact />}
       {currentPage === 'profile' && <Profile />}
       {currentPage === 'product' && <Products />}
-      {currentPage === 'login' && <Login />}
+      {currentPage === 'login' && <Login onLoginSuccess={handleLoginSuccess} />}
       {currentPage === 'register' && <Register />}
       {currentPage === 'adminproduct' && <AdminsProject />}
       
