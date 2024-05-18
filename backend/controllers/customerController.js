@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const authenticationMiddleware = require('../middleware/authentication');
 const authorizationMiddleware = require('../middleware/authorization');
+const bcrypt = require('bcrypt');
 
 const client = new MongoClient(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -122,7 +123,7 @@ const customerController = {
         }
     },
 
-    updateCustomer: async (req, res) => {
+     updateCustomer :async (req, res) => {
         let connection;
         try {
             console.log("Received PUT request");
@@ -142,12 +143,19 @@ const customerController = {
                         // If customer, extract customer ID from JWT payload
                         customerId = req.user.customerId;
                     }
+                    
+                    if (!req.body.Password) {
+                        throw new Error('Password is missing');
+                    }
+    
+                    const hashedPassword = await bcrypt.hash(req.body.Password, 10);
     
                     const updateQuery = {
                         $set: {
                             Name: req.body.Name,
                             Email: req.body.Email,
-                            Address: req.body.Address
+                            Address: req.body.Address,
+                            Password: hashedPassword
                         }
                     };
     
@@ -168,6 +176,7 @@ const customerController = {
             console.log("Connection to MongoDB closed.");
         }
     }
+    
 };
 
 module.exports = customerController;

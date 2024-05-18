@@ -56,31 +56,39 @@ function Profile({ onSignOutSuccess }) {
             console.error('Error fetching cart data:', error);
         }
     };
-    const handleEdit = async (field, value) => {
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const updatedCustomerData = {
+            Name: formData.get('Name'),
+            Email: formData.get('Email'),
+            Address: formData.get('Address'),
+            Password: formData.get('password') // Assuming you want to update the password too
+        };
+    
         try {
-            const requestBody = { [field]: value }; // Construct the request body
-            const response = await fetch(`http://localhost:3000/api/v1/customer/Update`, {
-                method: 'PATCH',
+            // Make a PUT request to update the customer data
+            const response = await fetch('http://localhost:3000/api/v1/customer/Update', {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(requestBody),
+                body: JSON.stringify(updatedCustomerData),
                 credentials: 'include'
             });
     
-            if (!response.ok) {
-                throw new Error(`Failed to edit ${field} (status: ${response.status})`);
+            if (response.ok) {
+                console.log('Customer updated successfully');
+                // Handle the successful update, such as displaying a success message
+            } else {
+                console.error('Failed to update customer');
+                // Handle the failure, such as displaying an error message
             }
-    
-            const data = await response.json();
-            console.log(`Edited ${field} successfully:`, data);
-            fetchCustomer(); // Refresh customer data after edit
         } catch (error) {
-            console.error(`Error editing ${field}:`, error);
+            console.error('Error updating customer:', error);
         }
     };
-      
-
+    
     const fetchOrders = async () => {
         try {
             const response = await fetch('http://localhost:3000/api/v1/orders/Get', {
@@ -141,29 +149,30 @@ function Profile({ onSignOutSuccess }) {
                         </div>
     
                         {customer && (
-                            <div className={styles.section} id="personal-details">
-                                <h2>Personal Details</h2>
-                                <div className={styles.field}>
-                                    <p><strong>Name:</strong> {customer.Name}</p>
-                                    <input type="text" id="nameInput" />
-                                </div>
-                                <div className={styles.field}>
-                                    <p><strong>Email:</strong> {customer.Email}</p>
-                                    <input type="text" id="emailInput" />
-                    
-                                </div>
-                                <div className={styles.field}>
-                                    <p><strong>Address:</strong> {customer.Address}</p>
-                                    <input type="text" id="addressInput" />
-                                    
-                                </div>
-                                <div className={styles.field}>
-                                    <label htmlFor="password">New Password:</label>
-                                    <input type="password" id="password" name="password" placeholder="New Password" />
-                                    <button onClick={() => handleEdit('Address')}>update profile</button>
-                                </div>
-                            </div>
-                        )}
+    <form onSubmit={handleEdit}>
+        <div className={styles.section} id="personal-details">
+            <h2>Personal Details</h2>
+            <div className={styles.field}>
+                <label htmlFor="Name">Name:{customer.Name}</label>
+                <input type="text" id="Name" name="Name" defaultValue="" />
+            </div>
+            <div className={styles.field}>
+                <label htmlFor="Email">Email:{customer.Email}</label>
+                <input type="text" id="Email" name="Email" defaultValue="" />
+            </div>
+            <div className={styles.field}>
+                <label htmlFor="Address">Address:{customer.Address}</label>
+                <input type="text" id="Address" name="Address" defaultValue="" />
+            </div>
+            <div className={styles.field}>
+                <label htmlFor="password">New Password:</label>
+                <input type="password" id="password" name="password" placeholder="New Password" />
+            </div>
+            <button type="submit">Update Profile</button>
+        </div>
+    </form>
+)}
+
     
                         <div className={styles.section}>
                             <h2><i className="bi bi-cart"></i> Cart</h2>
