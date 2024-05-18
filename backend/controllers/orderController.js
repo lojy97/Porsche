@@ -3,215 +3,169 @@ require('dotenv').config();
 const jwt = require("jsonwebtoken");
 const orderModel = require("../models/orderModel.js");
 const bcrypt = require("bcrypt");
-const { get } = require("mongoose");
+const { MongoClient } = require("mongodb");
+const authenticationMiddleware = require('../middleware/authentication');
+const authorizationMiddleware = require('../middleware/authorization');
 
+const client = new MongoClient(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 const orderController = {
     addOrder: async (req, res) => {
+        let connection;
         try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
+                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access the specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Orders");
 
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
+                    const lastOrder = await collection.find().sort({ OrderID: -1 }).limit(1).toArray();
+                    let lastOrderId = lastOrder.length > 0 ? lastOrder[0].OrderID + 1 : 1;
 
-            // Extract the last order from the database
-            const lastOrder = await collection.find().sort({ OrderID: -1 }).limit(1).toArray();
+                    const { customerId, products, totalPrice, shippingAddress } = req.body;
 
-            // Initialize the OrderID to 1 if no orders exist, otherwise increment by 1
-            let lastOrderId = lastOrder.length > 0 ? lastOrder[0].OrderID + 1 : 1;
+                    const newOrder = {
+                        OrderID: lastOrderId,
+                        customerId: customerId,
+                        products: products,
+                        totalPrice: totalPrice,
+                        shippingAddress: shippingAddress,
+                        createdAt: new Date()
+                    };
 
-            // Extract order data from the request body
-            const { customerId, products, totalPrice, shippingAddress } = req.body;
-
-            // Create a new order document
-            const newOrder = {
-                OrderID: lastOrderId,
-                customerId: customerId,
-                products: products,
-                totalPrice: totalPrice,
-                shippingAddress: shippingAddress,
-                createdAt: new Date()
-            };
-
-            // Insert the new order document into the collection
-            const result = await collection.insertOne(newOrder);
-
-            // Send a success response with the generated OrderID
-            res.status(201).json({ message: "Order added successfully", OrderID: lastOrderId });
+                    await collection.insertOne(newOrder);
+                    res.status(201).json({ message: "Order added successfully", OrderID: lastOrderId });
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error adding order:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Close the MongoDB connection
-            await client.close();
-            console.log("Connection to MongoDB closed.");
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
     getAllOrders: async (req, res) => {
+        let connection;
         try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access the specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Orders");
 
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
-
-            // Find all orders in the collection
-            const orders = await collection.find().toArray();
-
-            // Send a success response with the orders
-            res.status(200).json(orders);
+                    const orders = await collection.find().toArray();
+                    res.status(200).json(orders);
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error getting orders:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Close the MongoDB connection
-            await client.close();
-            console.log("Connection to MongoDB closed.");
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
     deleteOrder: async (req, res) => {
+        let connection;
         try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
-    
-            // Access the specific database
-            const database = client.db("PorcheWeb");
-    
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
-    
-            // Delete the order with the provided ID
-          const  orderIdToDelete=parseInt(req.params.OrderID)
-           // const productId = parseInt(req.params.productId);
-            const result = await collection.deleteOne({ OrderID: orderIdToDelete });
-            console.log(orderIdToDelete)
-            console.log(result)
-            console.log({ OrderID: orderIdToDelete })
-          console.log("-------------------------------------------------------")
-         
-            if (result.deletedCount === 1) {
-                res.status(200).json({ message: 'Order deleted successfully' });
-            } else {
-                res.status(404).json({ message: 'Order not found' });
-            }
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
+
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Orders");
+
+                    const orderIdToDelete = parseInt(req.params.OrderID);
+                    const result = await collection.deleteOne({ OrderID: orderIdToDelete });
+
+                    if (result.deletedCount === 1) {
+                        res.status(200).json({ message: 'Order deleted successfully' });
+                    } else {
+                        res.status(404).json({ message: 'Order not found' });
+                    }
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error deleting order:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            try {
-                // Close the MongoDB connection
-                await client.close();
+            if (connection) {
+                await connection.close();
                 console.log("Connection to MongoDB closed.");
-            } catch (e) {
-                console.error("Error closing MongoDB connection:", e);
             }
         }
     },
     getOrder: async (req, res) => {
+        let connection;
         try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
-    
-            // Access the specific database
-            const database = client.db("PorcheWeb");
-    
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
-    
-            // Extract the orderId from the request parameters
-            const orderId = parseInt(req.params.OrderID);
-    
-            // Find the order document with the specified orderId
-            const order = await collection.findOne({ OrderID: orderId });
-    
-            // If order is found, send it as a JSON response
-            if (order) {
-                res.json(order);
-            } else {
-                res.status(404).json({ message: "Order not found" });
-            }
+            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
+                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
+
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Orders");
+
+                    const orderId = parseInt(req.params.OrderID);
+                    const order = await collection.findOne({ OrderID: orderId });
+
+                    if (order) {
+                        res.json(order);
+                    } else {
+                        res.status(404).json({ message: "Order not found" });
+                    }
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error retrieving order:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Close the MongoDB connection
-            await client.close();
-            console.log("Connection to MongoDB closed.");
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
-    // get all orders
-    getOrders: async (req, res) => {
-        try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
-
-            // Access the specific database
-            const database = client.db("PorcheWeb");
-
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
-
-            // Find all orders in the collection
-            const orders = await collection.find().toArray();
-
-            // Send a success response with the orders
-            res.status(200).json(orders);
-        } catch (error) {
-            // Handle errors
-            console.error("Error getting orders:", error);
-            res.status(500).json({ message: "Internal server error" });
-        } finally {
-            // Close the MongoDB connection
-            await client.close();
-            console.log("Connection to MongoDB closed.");
-        }
-    },
-    // get all orders for a specific customer
     getCustomerOrders: async (req, res) => {
+        let connection;
         try {
-            // Connect to MongoDB
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
+                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access the specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Orders");
 
-            // Access the "Orders" collection within the database
-            const collection = database.collection("Orders");
+                    const customerId = parseInt(req.params.customerId);
+                    const orders = await collection.find({ customerId: customerId }).toArray();
 
-            // Extract the customerId from the request parameters
-            const customerId = parseInt(req.params.customerId);
-
-            // Find all orders in the collection
-            const orders = await collection.find({ customerId: customerId }).toArray();
-
-            // Send a success response with the orders
-            res.status(200).json(orders);
+                    res.status(200).json(orders);
+                });
+            });
         } catch (error) {
-            // Handle errors
-            console.error("Error getting orders:", error);
+            console.error("Error getting customer orders:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Close the MongoDB connection
-            await client.close();
-            console.log("Connection to MongoDB closed.");
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     }
-}
+};
+
 module.exports = orderController;

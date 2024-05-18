@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require("../controllers/orderController");
-const authorizationMiddleware = require('../middleware/authorization');
+
 
 // * Get all orders
-router.get("/",  authorizationMiddleware(['admin']),orderController.getAllOrders);
+router.get("/GetAll", orderController.getAllOrders);
 
 // * Get one order
 // * Get one order
-router.get("/order/:id", authorizationMiddleware(['admin','customer']), orderController.getOrder);
+router.get("/order/:id", orderController.getOrder);
 
 // * Get a specific user's orders
-router.get("/customer/:id", authorizationMiddleware(['admin']), orderController.getCustomerOrders);
+router.get("/customer/:id",  orderController.getCustomerOrders);
 
 // * Delete one order
-router.delete("/delete-order/:id", authorizationMiddleware(['admin']), orderController.deleteOrder);
+router.delete("/delete-order/:id",  orderController.deleteOrder);
 
 //add an order
-router.post("/addOrder", authorizationMiddleware(['admin','customer']),orderController.addOrder);
+router.post("/addOrder",orderController.addOrder);
 
 module.exports = router;

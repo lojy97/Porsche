@@ -1,18 +1,16 @@
-const jwt = require("jsonwebtoken");
-const customerModel = require("../models/customerModel.js");
-const bcrypt = require("bcrypt");
 const { MongoClient } = require("mongodb");
+const authenticationMiddleware = require('../middleware/authentication');
+const authorizationMiddleware = require('../middleware/authorization');
 
 const client = new MongoClient(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
-const authenticationMiddleware = require('../middleware/authentication');
-const authorizationMiddleware = require('../middleware/authorization');
-
 const customerController = {
     deleteCustomer: async (req, res) => {
+        console.log("Received DELETE request");
+        let connection;
         try {
             // Authentication middleware
             console.log("Received DELETE request")
@@ -22,10 +20,10 @@ const customerController = {
                 authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
                     console.log("Authorization passed");
                     // Connect to MongoDB
-                    await client.connect();
+                    connection = await client.connect();
                     console.log("Connected to MongoDB!");
 
-                    const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
                     const collection = database.collection("Customers");
 
                     const customerId = parseInt(req.params.customerId);
@@ -42,12 +40,15 @@ const customerController = {
             console.error("Error deleting customer:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            await client.close();
-            console.log("Connection to MongoDB closed.");
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
 
     editCustomer: async (req, res) => {
+        let connection;
         try {
             console.log("Received PATCH request");
             const customerId = parseInt(req.params.customerId);
@@ -89,6 +90,7 @@ const customerController = {
     },
 
     getCustomer: async (req, res) => {
+        let connection;
         try {
             // Authentication middleware
             authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
@@ -121,6 +123,7 @@ const customerController = {
 
     getAllCustomers: async (req, res) => {
         console.log("Received GET request");
+        let connection;
         try {
             // Authentication middleware
             authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
@@ -147,6 +150,7 @@ const customerController = {
     },
 
     updateCustomer: async (req, res) => {
+        let connection;
         try {
             console.log("Received PUT request");
             const customerId = parseInt(req.params.id);
@@ -184,6 +188,6 @@ const customerController = {
             console.log("Connection to MongoDB closed.");
         }
     }
-}
+};
 
 module.exports = customerController;

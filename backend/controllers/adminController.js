@@ -1,138 +1,169 @@
-require('dotenv').config();
-
-const jwt = require("jsonwebtoken");
-const adminModel = require("../models/adminModel.js");
-const bcrypt = require("bcrypt");
-const { MongoClient } = require("mongodb"); // Import MongoClient
+const { MongoClient } = require("mongodb");
+const authenticationMiddleware = require('../middleware/authentication');
+const authorizationMiddleware = require('../middleware/authorization');
 
 const client = new MongoClient(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+
 const adminController = {
-    
     deleteAdmin: async (req, res) => {
-        console.log("delete admin");
+        console.log("Received DELETE request");
+        let connection;
         try {
-            // Connect the client to the server
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            // Authentication middleware
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                console.log("Authentication passed");
+                // Authorization middleware
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    console.log("Authorization passed");
+                    // Connect to MongoDB
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access a specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Admins");
 
-            // Access the "Admins" collection within the database
-            const collection = database.collection("Admins");
+                    const adminId = parseInt(req.params.id);
+                    const result = await collection.deleteOne({ AdminID: adminId });
 
-            // Find the admin document with the given AdminID
-            const admin = await collection.findOne({ AdminID: req.params.id });
-
-            // Check if the admin exists
-            if (admin) {
-                // Delete the admin document
-                await collection.deleteOne({ AdminID: req.params.id });
-                res.status(200).json({ message: "Admin deleted successfully" });
-            } else {
-                res.status(404).json({ message: "Admin not found" });
-            }
+                    if (result.deletedCount === 1) {
+                        res.status(200).json({ message: `Admin with AdminID ${adminId} deleted successfully` });
+                    } else {
+                        res.status(404).json({ message: `Admin with AdminID ${adminId} not found` });
+                    }
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error deleting admin:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
-            await client.close();
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
+
     editAdmin: async (req, res) => {
+        console.log("Received PATCH request");
+        let connection;
         try {
-            // Connect the client to the server
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            const adminId = parseInt(req.params.id);
+            // Authentication middleware
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                console.log("Authentication passed");
+                // Authorization middleware
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    console.log("Authorization passed");
+                    // Connect to MongoDB
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access a specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Admins");
 
-            // Access the "Admins" collection within the database
-            const collection = database.collection("Admins");
+                    const updateQuery = {
+                        $set: {
+                            Name: req.body.name,
+                            Email: req.body.email,
+                            Address: req.body.address
+                        }
+                    };
 
-            // Find the admin document with the given AdminID
-            const admin = await collection.findOne({ AdminID: req.params.id });
+                    const result = await collection.updateOne({ AdminID: adminId }, updateQuery);
 
-            // Check if the admin exists
-            if (admin) {
-                // Update the admin document
-                await collection.updateOne({ AdminID: req.params.id }, { $set: req.body });
-                res.status(200).json({ message: "Admin updated successfully" });
-            } else {
-                res.status(404).json({ message: "Admin not found" });
-            }
+                    if (result.modifiedCount === 1) {
+                        res.status(200).json({ message: `Admin with AdminID ${adminId} updated successfully` });
+                    } else {
+                        res.status(404).json({ message: `Admin with AdminID ${adminId} not found` });
+                    }
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error updating admin:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
-            await client.close();
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
-    // get all admins
+
     getAdmins: async (req, res) => {
+        console.log("Received GET request");
+        let connection;
         try {
-            // Connect the client to the server
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            // Authentication middleware
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                console.log("Authentication passed");
+                // Authorization middleware
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    console.log("Authorization passed");
+                    // Connect to MongoDB
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access a specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Admins");
 
-            // Access the "Admins" collection within the database
-            const collection = database.collection("Admins");
+                    const admins = await collection.find().toArray();
 
-            // Retrieve all admin documents
-            const admins = await collection.find().toArray();
-
-            // Send the retrieved documents as a JSON response
-            res.json(admins);
+                    res.status(200).json(admins);
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error retrieving admins:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
-            await client.close();
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
     },
-    // get a specific admin
+
     getSpecificAdmin: async (req, res) => {
+        console.log("Received GET request");
+        let connection;
         try {
-            // Connect the client to the server
-            await client.connect();
-            console.log("Connected to MongoDB!");
+            // Authentication middleware
+            authenticationMiddleware(['admin'])(req, res, async () => {
+                console.log("Authentication passed");
+                // Authorization middleware
+                authorizationMiddleware(['admin'])(req, res, async () => {
+                    console.log("Authorization passed");
+                    // Connect to MongoDB
+                    connection = await client.connect();
+                    console.log("Connected to MongoDB!");
 
-            // Access a specific database
-            const database = client.db("PorcheWeb");
+                    const database = connection.db("PorcheWeb");
+                    const collection = database.collection("Admins");
 
-            // Access the "Admins" collection within the database
-            const collection = database.collection("Admins");
+                    const adminId = parseInt(req.params.id);
+                    const admin = await collection.findOne({ AdminID: adminId });
 
-            // Find the admin document with the given AdminID
-            const admin = await collection.findOne({ AdminID: req.params.id });
-
-            // Check if the admin exists
-            if (admin) {
-                res.json(admin);
-            } else {
-                res.status(404).json({ message: "Admin not found" });
-            }
+                    if (admin) {
+                        res.status(200).json(admin);
+                    } else {
+                        res.status(404).json({ message: `Admin with AdminID ${adminId} not found` });
+                    }
+                });
+            });
         } catch (error) {
-            // Handle errors
             console.error("Error retrieving admin:", error);
             res.status(500).json({ message: "Internal server error" });
         } finally {
-            // Ensure that the client will close when you finish/error
-            await client.close();
+            if (connection) {
+                await connection.close();
+                console.log("Connection to MongoDB closed.");
+            }
         }
-    }
-}
+    },
+    
+
+};
+
 module.exports = adminController;

@@ -3,10 +3,10 @@ const router = express.Router();
 const cartController = require("../controllers/cartController");
 const authorizationMiddleware=require('../middleware/authorization')
 
-router.post("/:id", authorizationMiddleware(['admin']),cartController.addToCart)
+router.post("/AddCart/:id",cartController.addToCart)
 
-router.get("/:id", authorizationMiddleware(['admin','customer']), cartController.getCart);
+router.get("/getCart/:id",cartController.getCart);
 
-router.delete("/:id", authorizationMiddleware(['admin']), cartController.deleteFromCart);
+router.delete("/deleteCart/:id",  cartController.deleteFromCart);
 
 module.exports = router;
