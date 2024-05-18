@@ -90,7 +90,7 @@ const authController = {
                 return res.status(401).json({ auth: false, message: 'Invalid password.' });
             }
     
-            const payload = { name: user.Name, email: user.Email, role: user.role };  // Add role to payload
+            const payload = { name: user.CustomerID, email: user.Email, role: user.role };  // Add role to payload
             const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     
             // Set the JWT token in a cookie
@@ -185,6 +185,11 @@ const authController = {
         } finally {
             await client.close();
         }
+    },
+    logout: (req, res) => {
+        // Clear the JWT cookie
+        res.clearCookie('jwt', { httpOnly: true });
+        res.status(200).json({ message: "Logout successful" });
     }
     
 
