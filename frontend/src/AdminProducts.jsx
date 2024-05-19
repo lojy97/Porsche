@@ -185,6 +185,7 @@
 // // };
 // // export default adminProducts;
 import React, { useState, useEffect } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
 import styles from './AdminProducts.module.css';
 
