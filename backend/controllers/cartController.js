@@ -72,6 +72,7 @@ const cartController = {
                             // If customer, extract customer ID from JWT payload
                             customerId = req.user.customerId;
                         }
+                        console.log("Customer ID:", customerId);
     
                         // Ensure customerId is defined
                         if (!customerId) {
@@ -82,7 +83,7 @@ const cartController = {
                         console.log("Customer ID:", customerId);
     
                         // Retrieve cart documents for the specific customer
-                        const queryResult = await collection.find({ customerId: customerId }).toArray();
+                        const queryResult = await collection.find({ CustomerID: customerId }).toArray();
     
                         // Send the retrieved documents as a JSON response
                         res.json(queryResult);

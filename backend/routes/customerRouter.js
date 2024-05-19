@@ -11,6 +11,8 @@ router.get("/GetAll", customerController.getAllCustomers);
 
 router.get("/Get", customerController.getCustomer);
 
+router.get("/AdminGet/:id", customerController.getAdminCustomer);
+
 router.put("/Update", customerController.updateCustomer);
 
 router.delete("/deleteCustomer/:customerId", customerController.deleteCustomer);
