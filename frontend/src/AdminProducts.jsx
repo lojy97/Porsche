@@ -1,12 +1,7 @@
 
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import styles from './AdminProducts.module.css';
-=======
 // // import React, { useState, useEffect } from 'react';
 // // import axios from 'axios';
 // // import styles from './adminProducts.module.css';
->>>>>>> 03b6ed4335bed6267c495fe4f582d857492453b6
 
 // // const adminProducts = () => {
 
@@ -192,7 +187,7 @@ import styles from './AdminProducts.module.css';
 import React, { useState, useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
-import styles from './adminProducts.module.css';
+import styles from './AdminProducts.module.css';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
