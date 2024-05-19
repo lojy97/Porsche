@@ -194,11 +194,55 @@ const Products = () => {
     );
     setFilteredProducts(filtered);
   };
-  
 
-  const addToCart = () => {
+
+  const addToCart = (product) => {
     setCartCount(cartCount + 1);
     showMessage();
+    let customerId;
+    const fetchCustomer = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/customer/Get', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch customer data (status: ${response.status})`);
+        }
+        const data = await response.json();
+        console.log('Fetched customer data:', data);
+        customerId = (data.customerId);
+      } catch (error) {
+        console.error('Error fetching customer data:', error);
+      }
+    };
+
+    const fetchCart = async () => {
+      try {
+        const response = await axios.post('http://localhost:3000/api/v1/cart/AddCart',
+          {
+            productId: product.ProductId,
+            quantity: 1,
+            customerId: customerId
+          },
+          {
+            withCredentials: true
+          }
+        );
+
+        console.log('Fetched cart:', response.data);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+
+
+    };
   };
 
   const showMessage = () => {
@@ -243,7 +287,7 @@ const Products = () => {
                         <div className="card-body">
                           <h5 className="card-title">{product.name}</h5>
                           <p className="card-text">{product.description}</p>
-                          <button className="btn btn-primary buy-btn" onClick={addToCart}>Buy Now</button>
+                          <button className="btn btn-primary buy-btn" onClick={() => addToCart(product)}>Buy Now</button>
                         </div>
                       </div>
                     </div>
