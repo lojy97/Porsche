@@ -1,254 +1,130 @@
-
-/* profile.module.css */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .giant-container {
-    position: relative;
-    width: 100%; 
-    min-height: 100vh; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center; 
+.pageBackground {
+    background: linear-gradient(to right, #f2bdff, #d1fcff);
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.page-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/frontend/public/photos gt3/PersonalInfo.jpg');
-    background-size: cover;
-    background-position: center;
-    z-index: -1; /* Ensure the background stays behind other content */
+.giant-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
 
 .body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    background-image: url('/frontend/public/photos gt3/PersonalInfo.jpg');
-    background-size: cover;
-    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-h1,
-h2 {
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #333;
-    color: #fff;
-}
-
-textarea {
-    height: 150px;
-}
-
-button {
-    padding: 10px 10px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: justify;
-}
-
-.change-password button:hover {
-    background-color: #218838;
-}
-
-.profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 0 auto 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #fff;
-}
-
-.profile-picture img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-}
-
-.navbar {
-    position: relative;
     width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-.sidebar {
-    width: 150px;
-    height: 100vh;
-    position: fixed;
-    top: 0px;
-    left: -150px; 
-    overflow-y: auto;
-    transition: left 0.6s ease;
-    background-color: rgba(78, 74, 74, 0.164);
-    box-shadow: 0 0 10px 0 rgba(12, 12, 12, 0.5);
-    z-index: 999;
-    padding-top: 56px;
-}
-
-.openbtn {
-    position: fixed;
-    top: 70px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    box-shadow: 0 0 10px 0 rgba(17, 7, 7, 0.5);
-    z-index: 1000;
-}
-
-.closebtn {
-    position: absolute;
-    color: white;
-    font-size: 20px;
-    right: 10px;
-    top: 70px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-
-.fs-1.fw-bold {
-    font-size: 7rem !important;
-    color: white;
-    margin-left: 100px !important;
-    text-shadow: 2px 2px 4px black;
-}
-
-.words {
-    font-size: 2rem !important;
-    margin-left: 100px !important;
-    margin-right: 100px !important;
-    color: white;
-    text-shadow: 2px 2px 4px black;
-}
-
-.menu {
-    padding: 0;
-    margin: 50px 0 20px;
-    list-style: none;
-}
-
-.menu .item a {
-    display: block;
-    padding: 10px 15px;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.menu .item a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.menu .item a i {
-    margin-top: 150px;
-    margin-right: 10px;
-}
-
-.sidebar-footer {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-}
-
-.sidebar-footer a {
-    color: white;
-    text-decoration: none;
-    display: block; 
-    margin: 5px 0; 
-}
-
-.sidebar-footer a:hover {
-    text-decoration: underline;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 998; 
-    display: none;
-}
-
-.navbar-brand img {
-    width: 150px; 
-    height: auto;
-    margin-right: 100px; 
-    display: block; 
+    max-width: 800px;
+    margin: 20px 0;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
+
 .title {
-    margin: 0;
-    font-size: 2rem;
+    font-size: 2em;
+    color: #333;
 }
-.btnSignOut {
-    background-color: #d9534f;
-    color: white;
+
+.btn {
+    padding: 10px 20px;
     border: none;
-    padding: 0.5rem 1rem;
+    border-radius: 25px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.btnSignOut {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
 }
 
 .btnSignOut:hover {
-    background-color: #c9302c;
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btnAdminPage {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: white;
+}
+
+.btnAdminPage:hover {
+    background: linear-gradient(135deg, #38ef7d, #11998e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+li p {
+    margin: 5px 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+h2 i {
+    margin-right: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
