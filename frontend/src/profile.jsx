@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Profile.module.css'; // Importing the CSS module
 
-function Profile({ onSignOutSuccess }) {
+function Profile({  onSignOutSuccess, handleAdminSwap }) {
     const [customer, setCustomer] = useState(null);
     const [cart, setCart] = useState([]);
     const [orders, setOrders] = useState([]);
@@ -37,7 +37,8 @@ function Profile({ onSignOutSuccess }) {
 
     const fetchCart = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/v1/cart/Get', {
+            console.log('Fetching cart data...');
+            const response = await fetch('http://localhost:3000/api/v1/cart/getCart', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,6 +53,7 @@ function Profile({ onSignOutSuccess }) {
             const data = await response.json();
             console.log('Fetched cart data:', data);
             setCart(data);
+            
         } catch (error) {
             console.error('Error fetching cart data:', error);
         }
@@ -131,6 +133,17 @@ function Profile({ onSignOutSuccess }) {
             console.error('Error signing out:', error);
         }
     };
+    const handleAdminSwaping = async () => {
+        try {
+            // Here you might add any necessary pre-processing or logging if needed
+            console.log('Admin swap initiated');
+            
+            // Call the handleAdminSwap function passed as a prop
+            handleAdminSwap();
+        } catch (error) {
+            console.error('Error during admin swap:', error);
+        }
+    };
 
     console.log('Customer state:', customer);
 
@@ -145,6 +158,11 @@ function Profile({ onSignOutSuccess }) {
                                 onClick={handleSignOut}
                                 className={`${styles.btn} ${styles.btnSignOut}`}>
                                 Sign Out
+                            </button>
+                            <button
+                                onClick={handleAdminSwaping}
+                                className={`${styles.btn} ${styles.btnAdminPage}`}>
+                                Admin Page
                             </button>
                         </div>
     

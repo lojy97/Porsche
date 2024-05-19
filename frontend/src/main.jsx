@@ -29,16 +29,20 @@ function App() {
     setSidebarOpen(false);
   };
   const handleRegisterSuccess = () => {
-    setCurrentPage('login');
+    handleNavigation('login');
     console.log('Tomfoolery is not tolerated here!');
 };
   const handleLoginSuccess = () => {
-    setCurrentPage('home');
+    handleNavigation('home');
     console.log('it has been run') // Navigate to the homepage
   };
   const handleSignOutSuccess = () => {
-    setCurrentPage('home');
+    handleNavigation('home');
     console.log('running it back'); // Optional: Add actual navigation logic
+};
+const handleAdminSwap = () => {
+  handleNavigation('adminprofile');
+  console.log('AdminPage'); // Optional: Add actual navigation logic
 };
 
   return (
@@ -123,12 +127,15 @@ function App() {
       {currentPage === 'home' && <Home />}
       {currentPage === 'about' && <About />}
       {currentPage === 'contact' && <Contact />}
-      {currentPage === 'profile' && <Profile onSignOutSuccess={handleSignOutSuccess}/>}
+      {currentPage === 'profile' && <Profile 
+      onSignOutSuccess={handleSignOutSuccess}
+      handleAdminSwap={handleAdminSwap}
+      />}
       {currentPage === 'product' && <Products />}
       {currentPage === 'login' && <Login onLoginSuccess={handleLoginSuccess} />}
       {currentPage === 'register' && <Register handleRegisterSuccess={handleRegisterSuccess} />}
       {currentPage === 'adminproduct' && <AdminsProject />}
-      {currentPage === 'adminprofile' && <AdminProfile />}
+      {currentPage === 'adminprofile' && <AdminProfile onSignOutSuccess={handleSignOutSuccess} />}
       
     </div>
   );

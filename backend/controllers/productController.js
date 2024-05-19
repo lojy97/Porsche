@@ -61,19 +61,15 @@ const productController = {
     getAllProducts: async (req, res) => {
         let connection;
         try {
-            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
-                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
-                    connection = await client.connect();
-                    console.log("Connected to MongoDB!");
-
-                    const database = connection.db("PorcheWeb");
-                    const collection = database.collection("Products");
-
-                    const products = await collection.find().toArray();
-
-                    res.status(200).json(products);
-                });
-            });
+            connection = await client.connect();
+            console.log("Connected to MongoDB!");
+    
+            const database = connection.db("PorcheWeb");
+            const collection = database.collection("Products");
+    
+            const products = await collection.find().toArray();
+    
+            res.status(200).json(products);
         } catch (error) {
             console.error("Error getting products:", error);
             res.status(500).json({ message: "Internal server error" });
