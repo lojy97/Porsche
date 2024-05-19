@@ -3,7 +3,7 @@ import styles from './Contact.module.css'; // Import the CSS module
 
 function Contact() {
   return (
-    <div className={styles.Contact}> {/* Use the class name from the CSS module */}
+    <div className={styles.Contact} style={{ backgroundImage: `url('frontend\src\PersonalInfo.jpg')` }}>
       <div className={styles.title}>
         <h2>Get in Touch</h2>
       </div>

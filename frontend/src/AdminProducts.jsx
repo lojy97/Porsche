@@ -327,9 +327,9 @@ const AdminProducts = () => {
           {filteredProducts.map((product, index) => (
             <div className="col-md-4 mb-3" key={index}>
               <div className="card">
-                <img src={product.image} className="card-img-top" alt={product.name} />
+                <img src={product.url} className="card-img-top" alt={product.ProductName} />
                 <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
+                  <h5 className="card-title">{product.ProductName}</h5>
                   <p className="card-text">{product.description}</p>
                   <button className="btn btn-primary buy-btn" onClick={addToCart}>Buy Now</button>
                   <button className="btn btn-danger delete-btn" onClick={() => deleteProduct(product)}>Delete</button>

@@ -133,6 +133,8 @@ const Products = () => {
                     <div className="col-md-4 mb-3" key={index}>
                       <div className={`card ${styles.card}`}>
                         <img src={product.url} className="card-img-top" alt={product.name} />
+                        <p>{product.ProductName}</p>
+                        <p>{product.price}</p>
                         <div className="card-body">
                           <h5 className="card-title">{product.name}</h5>
                           <p className="card-text">{product.description}</p>

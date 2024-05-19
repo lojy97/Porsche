@@ -11,8 +11,6 @@ router.get("/GetAll", orderController.getAllOrders);
 // * Get one order
 router.get("/getOrder", orderController.getOrder);
 
-// * Get a specific user's orders
-router.get("/customer/:id",  orderController.getCustomerOrders);
 
 // * Delete one order
 router.delete("/delete-order/:id",  orderController.deleteOrder);

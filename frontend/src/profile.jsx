@@ -94,7 +94,8 @@ function Profile({ onSignOutSuccess, handleAdminSwap }) {
 
     const fetchOrders = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/v1/orders/Get', {
+            console.log('Fetching orders data...');
+            const response = await fetch('http://localhost:3000/api/v1/order/getOrder', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,12 +104,13 @@ function Profile({ onSignOutSuccess, handleAdminSwap }) {
             });
 
             if (!response.ok) {
-                throw new Error(`Failed to fetch order data (status: ${response.status})`);
+                throw new Error(`Failed to fetch orders data (status: ${response.status})`);
             }
 
             const data = await response.json();
-            console.log('Fetched order data:', data);
+            console.log('Fetched orders data:', data);
             setOrders(data);
+            
         } catch (error) {
             console.error('Error fetching order data:', error);
         }
@@ -229,9 +231,9 @@ function Profile({ onSignOutSuccess, handleAdminSwap }) {
                                 <ul>
                                     {orders.map((order, index) => (
                                         <li key={index}>
-                                            <p><strong>Order ID:</strong> {order.orderId}</p>
-                                            <p><strong>Date:</strong> {order.date}</p>
-                                            <p><strong>Status:</strong> {order.status}</p>
+                                            <p><strong>Order ID:</strong> {order.OrderID}</p>
+                                            <p><strong>Date:</strong> {order.createdAt}</p>
+                                            <p><strong>price:</strong> {order.totalPrice}</p>
                                             <ul>
                                                 {Array.isArray(order.items) ? order.items.map((item, idx) => (
                                                     <li key={idx}>

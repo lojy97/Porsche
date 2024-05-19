@@ -111,41 +111,10 @@ const orderController = {
     getOrder: async (req, res) => {
         let connection;
         try {
-            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
-                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
-                    connection = await client.connect();
-                    console.log("Connected to MongoDB!");
-
-                    const database = connection.db("PorcheWeb");
-                    const collection = database.collection("Orders");
-
-                    const orderId = parseInt(req.params.OrderID);
-                    const order = await collection.findOne({ OrderID: orderId });
-
-                    if (order) {
-                        res.json(order);
-                    } else {
-                        res.status(404).json({ message: "Order not found" });
-                    }
-                });
-            });
-        } catch (error) {
-            console.error("Error retrieving order:", error);
-            res.status(500).json({ message: "Internal server error" });
-        } finally {
-            if (connection) {
-                await connection.close();
-                console.log("Connection to MongoDB closed.");
-            }
-        }
-    },
-    getCustomerOrders: async (req, res) => {
-        let connection;
-        try {
             // Authentication middleware
-            authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
+            authenticationMiddleware(['customer', 'admin'])(req, res, async () => {
                 // Authorization middleware
-                authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
+                authorizationMiddleware(['customer', 'admin'])(req, res, async () => {
                     try {
                         connection = await client.connect();
                         console.log("Connected to MongoDB!");
@@ -162,22 +131,24 @@ const orderController = {
                             customerId = req.user.customerId;
                         }
     
+                        console.log("Extracted Customer ID:", customerId);
+    
                         // Ensure customerId is defined
                         if (!customerId) {
                             res.status(400).json({ message: "Customer ID is required" });
                             return;
                         }
     
-                        console.log("Customer ID:", customerId);
+                        // Retrieve cart documents for the specific customer
+                        const queryResult = await collection.find({ customerId: customerId }).toArray();
     
-                        // Retrieve orders for the specific customer
-                        const orders = await collection.find({ customerId: customerId }).toArray();
+                        console.log("Query Result:", queryResult);
     
-                        // Send the retrieved orders as a JSON response
-                        res.status(200).json(orders);
+                        // Send the retrieved documents as a JSON response
+                        res.json(queryResult);
                     } catch (error) {
                         // Handle errors
-                        console.error("Error retrieving customer orders:", error);
+                        console.error("Error retrieving cart:", error);
                         res.status(500).json({ message: "Internal server error" });
                     } finally {
                         if (connection) {
@@ -192,6 +163,60 @@ const orderController = {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+    
+    // getCustomerOrders: async (req, res) => {
+    //     let connection;
+    //     try {
+    //         // Authentication middleware
+    //         authenticationMiddleware(['admin', 'customer'])(req, res, async () => {
+    //             // Authorization middleware
+    //             authorizationMiddleware(['admin', 'customer'])(req, res, async () => {
+    //                 try {
+    //                     connection = await client.connect();
+    //                     console.log("Connected to MongoDB!");
+    
+    //                     const database = connection.db("PorcheWeb");
+    //                     const collection = database.collection("Orders");
+    
+    //                     let customerId;
+    //                     if (req.user.role === 'admin') {
+    //                         // If admin, extract customer ID from request body
+    //                         customerId = req.body.customerId;
+    //                     } else if (req.user.role === 'customer') {
+    //                         // If customer, extract customer ID from JWT payload
+    //                         customerId = req.user.customerId;
+    //                     }
+    
+    //                     // Ensure customerId is defined
+    //                     if (!customerId) {
+    //                         res.status(400).json({ message: "Customer ID is required" });
+    //                         return;
+    //                     }
+    
+    //                     console.log("Customer ID:", customerId);
+    
+    //                     // Retrieve orders for the specific customer
+    //                     const orders = await collection.find({ customerId: customerId }).toArray();
+    
+    //                     // Send the retrieved orders as a JSON response
+    //                     res.status(200).json(orders);
+    //                 } catch (error) {
+    //                     // Handle errors
+    //                     console.error("Error retrieving customer orders:", error);
+    //                     res.status(500).json({ message: "Internal server error" });
+    //                 } finally {
+    //                     if (connection) {
+    //                         await connection.close();
+    //                         console.log("Connection to MongoDB closed.");
+    //                     }
+    //                 }
+    //             });
+    //         });
+    //     } catch (error) {
+    //         console.error("Error authenticating/authorizing:", error);
+    //         res.status(500).json({ message: "Internal server error" });
+    //     }
+    // }
     
 };
 
