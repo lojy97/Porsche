@@ -10,6 +10,8 @@ const Products = () => {
   const [cartCount, setCartCount] = useState(0);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [messageVisible, setMessageVisible] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [customer, setCustomer] = useState([]);
 
   const fetchProducts = async () => {
     try {
@@ -71,6 +73,7 @@ const Products = () => {
       }
     };
 
+
     const fetchCart = async () => {
       try {
         const response = await axios.post('http://localhost:3000/api/v1/cart/AddCart',
@@ -101,6 +104,101 @@ const Products = () => {
     }, 2000);
   };
 
+  const checkout = () => {
+    let customerId;
+    const fetchCustomer = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/customer/Get', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch customer data (status: ${response.status})`);
+        }
+        const data = await response.json();
+        console.log('Fetched customer data:', data);
+        setCustomer(data);
+      } catch (error) {
+        console.error('Error fetching customer data:', error);
+      }
+    };
+    customerId = customer.customerId;
+
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/v1/cart/getCart',
+          {
+            customerId: customerId
+          },
+          {
+            withCredentials: true
+          }
+        );
+
+        console.log('Fetched cart:', response.data);
+        setCart(response.data);
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+      const fetchCart = async () => {
+        try {
+          console.log('Fetching cart data...');
+          const response = await fetch(`http://localhost:3000/api/v1/cart/deleteCart/${cart.CartID}`, {
+            method: 'delete',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch cart data (status: ${response.status})`);
+          }
+
+          const data = await response.json();
+          console.log('Fetched cart data:', data);
+          setCart(data);
+
+        } catch (error) {
+          console.error('Error fetching cart data:', error);
+        }
+      };
+      let totalprice = cart.totalPrice;
+      const newOrder = {
+        OrderID: 5,
+        customerId: customerId,
+        products: cart.products,
+        totalPrice: totalprice,
+        shippingAddress: customer.Address,
+        createdAt: new Date()
+      };
+      const fetchOrders = async () => {
+
+        try {
+          const response = await fetch('https://localhost:3000/api/v1/order/addOrder', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOrder)
+          }
+          );
+        }
+        catch (error) {
+          console.error('Error fetching orders:', error);
+        }
+
+
+      };
+      alert('Checkout successful!');
+    }
+
+  };
   return (
     <div className={styles.products}>
       <div style={{ backgroundColor: 'whitesmoke' }}>
@@ -164,6 +262,7 @@ const Products = () => {
                   </div>
                 </div>
               )}
+              <button className="btn btn-primary buy-btn" onClick={() => checkout()}>Buy Now</button>
             </div>
           </div>
         </div>
