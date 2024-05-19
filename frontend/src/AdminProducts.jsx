@@ -185,8 +185,9 @@
 // // };
 // // export default adminProducts;
 import React, { useState, useEffect } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
-import styles from './adminProducts.module.css';
+import styles from './AdminProducts.module.css';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);

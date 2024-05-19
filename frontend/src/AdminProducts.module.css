@@ -1,87 +1,192 @@
-/* adminproducts.module.css */
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("/frontend/public/photos gt3/iris.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}
+
+.productTitle {
+  font-family: 'Pacifico', script;
+  color: palegoldenrod;
+  font-style: italic;
+}
+
+.cardImgTop:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.card {
+  border: none;
+  background-color: #57575a7e;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(168, 167, 167, 0.007);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.cardText {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.mainContent {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.messageSection {
+  display: none;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #dff0d8;
+  border: 1px solid #d0e9c6;
+  color: #3c763d;
+}
 
 .header {
-    background-color: #f0f0f0;
-    padding: 10px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #325579;
+  text-align: center;
+}
+
+.animatedText {
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .main-content {
-    margin-top: 20px;
+  to {
+    opacity: 1;
   }
-  
-  .animated-text {
-    animation: fadeIn 2s ease-in-out;
-  }
-  
-  .product-title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .tc {
-    text-align: center;
-  }
-  
-  .text-box {
-    padding: 20px;
-  }
-  
-  .search-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-icon {
-    cursor: pointer;
-  }
-  
-  #searchBar {
-    display: none;
-  }
-  
-  .container {
-    margin-top: 20px;
-  }
-  
-  .rounded {
-    border-radius: 5px;
-  }
-  
-  .row {
-    margin-bottom: 20px;
-  }
-  
-  .col {
-    padding: 0 15px;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  #cartCount {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  #messageSection {
-    display: none;
-  }
-  
-  .text-success {
-    color: green;
-  }
-  
-  .open-search {
-    background-color: #ffffff;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
+}
+
+.tc {
+  margin-bottom: 20px;
+}
+
+.cartSection {
+  text-align: center;
+}
+
+.searchIcon {
+  color: white;
+  font-size: 1.5rem;
+  position: fixed;
+  top: 20px; /* Adjust as needed */
+  right: 30px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.searchContainer {
+  position: fixed;
+  top: 60px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+#searchBar {
+  width: 300px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  border-radius: 25px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+}
+
+#searchInput {
+  width: 100%; /* Full width */
+  padding: 10px;
+  border: none;
+  border-radius: 25px 0 0 25px; /* Rounded left side */
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 16px;
+  outline: none;
+}
+
+#searchButton {
+  width: 80px;
+  padding: 10px;
+  border: none;
+  background-color: #1f194f;
+  color: white;
+  border-radius: 0 25px 25px 0; /* Rounded right side */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#searchButton:hover {
+  background-color: #161132;
+}
+
+.buyBtn,
+.updateBtn,
+.deleteBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buyBtn {
+  background-color: #1f194f;
+  border-color: #1f194f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.buyBtn:hover {
+  background-color: #161132;
+  border-color: #161132;
+}
+
+.updateBtn {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: bold;
+}
+
+.updateBtn:hover {
+  background-color: #117a8b;
+  border-color: #117a8b;
+}
+
+.deleteBtn {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: bold;
+}
+
+.deleteBtn:hover {
+  background-color: #c82333 !important;
+  border-color: #bd2130 !important;
+}
