@@ -9,4 +9,6 @@ router.get("/getCart",cartController.getCart);
 
 router.delete("/deleteCart/:id",  cartController.deleteFromCart);
 
+router.get("/GetAllCart",cartController.getAllCart);
+
 module.exports = router;

@@ -20,7 +20,7 @@ const cartController = {
                     console.log("Connected to MongoDB!");
 
                     const database = connection.db("PorcheWeb");
-                    const collection = database.collection("Carts");
+                    const collection = database.collection("Cart");
 
                     // Extract item data from the request body
                     const { customerId, productId, quantity } = req.body;
@@ -50,7 +50,7 @@ const cartController = {
         }
     },
 
-     getCart : async (req, res) => {
+    getCart: async (req, res) => {
         let connection;
         try {
             // Authentication middleware
@@ -62,7 +62,7 @@ const cartController = {
                         console.log("Connected to MongoDB!");
     
                         const database = connection.db("PorcheWeb");
-                        const collection = database.collection("Carts");
+                        const collection = database.collection("Cart");
     
                         let customerId;
                         if (req.user.role === 'admin') {
@@ -72,7 +72,8 @@ const cartController = {
                             // If customer, extract customer ID from JWT payload
                             customerId = req.user.customerId;
                         }
-                        console.log("Customer ID:", customerId);
+    
+                        console.log("Extracted Customer ID:", customerId);
     
                         // Ensure customerId is defined
                         if (!customerId) {
@@ -80,10 +81,10 @@ const cartController = {
                             return;
                         }
     
-                        console.log("Customer ID:", customerId);
-    
                         // Retrieve cart documents for the specific customer
                         const queryResult = await collection.find({ CustomerID: customerId }).toArray();
+    
+                        console.log("Query Result:", queryResult);
     
                         // Send the retrieved documents as a JSON response
                         res.json(queryResult);
@@ -104,6 +105,7 @@ const cartController = {
             res.status(500).json({ message: "Internal server error" });
         }
     },
+    
 
     deleteFromCart: async (req, res) => {
         let connection;
@@ -116,7 +118,7 @@ const cartController = {
                     console.log("Connected to MongoDB!");
     
                     const database = connection.db("PorcheWeb");
-                    const collection = database.collection("Carts");
+                    const collection = database.collection("Cart");
     
                     // Assuming we get the customer ID from the authenticated user
                     const customerId = req.user.id;
@@ -142,7 +144,64 @@ const cartController = {
                 console.log("Connection to MongoDB closed.");
             }
         }
+    },
+    getAllCart: async (req, res) => {
+        let connection;
+        try {
+            // Authentication middleware
+            // authenticationMiddleware(['customer', 'admin'])(req, res, async () => {
+                // Authorization middleware
+                // authorizationMiddleware(['customer', 'admin'])(req, res, async () => {
+                    try {
+                        connection = await client.connect();
+                        console.log("Connected to MongoDB!");
+    
+                        const database = connection.db("PorcheWeb");
+                        const collection = database.collection("Cart");
+    
+                        // let customerId;
+                        // if (req.user.role === 'admin') {
+                        //     // If admin, extract customer ID from request body
+                        //     customerId = req.body.customerId;
+                        // } else if (req.user.role === 'customer') {
+                        //     // If customer, extract customer ID from JWT payload
+                        //     customerId = req.user.customerId;
+                        // }
+    
+                        // console.log("Extracted Customer ID:", customerId);
+    
+                        // Ensure customerId is defined
+                        // if (!customerId) {
+                        //     res.status(400).json({ message: "Customer ID is required" });
+                        //     return;
+                        // }
+    
+                        // Retrieve cart documents for the specific customer
+                        const queryResult = await collection.find().toArray();
+    
+                        console.log("Query Result:", queryResult);
+    
+                        // Send the retrieved documents as a JSON response
+                        res.json(queryResult);
+                    } catch (error) {
+                        // Handle errors
+                        console.error("Error retrieving cart:", error);
+                        res.status(500).json({ message: "Internal server error" });
+                    } finally {
+                        if (connection) {
+                            await connection.close();
+                            console.log("Connection to MongoDB closed.");
+                        }
+                    }
+                // });
+            // });
+        } catch (error) {
+            console.error("Error authenticating/authorizing:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
     }
-};
+    
+
+}
 
 module.exports = cartController;
