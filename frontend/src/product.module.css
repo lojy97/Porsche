@@ -1,89 +1,127 @@
+/* product.module.css */
 .products {
-  background-image: none;
+  background-image: url('/frontend/public/photos gt3/iris.jpg'); /* Replace with your actual image path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+  padding: 20px; /* Add padding to ensure content doesn't touch the edges */
 }
 
-.card-img-top:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
+.header {
+  padding: 20px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+  border-radius: 15px;
 }
 
-.navbar {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  background-color: dark;
-  z-index: 1000;
+.animatedText {
+  font-size: 2.5rem; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  color: #f8f9fa; /* Light text color */
 }
 
-.main-content {
-  margin-top: 60px;
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.navbar-brand-img {
-  width: 150px;
-  height: auto;
+.searchIcon {
+  color: white; /* Change icon color to white for better visibility */
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
-#productContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: rgba(248, 248, 248, 0.8); /* Semi-transparent background for search bar */
+  border-radius: 25px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(233, 226, 226, 0.589);
+}
+
+#searchInput {
+  width: calc(100% - 90px);
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 15px;
+  margin-right: 10px;
+  background: transparent; /* Make input background transparent */
+  color: black; /* Ensure text color is black */
+}
+
+#searchButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
 }
 
 .card {
-  width: 100%;
+  border: none; /* Remove border */
+  background-color: rgba(87, 87, 90, 0.7); /* Semi-transparent background */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Added style for message */
-.message-section {
-  display: none; /* Hide by default */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(168, 167, 167, 0.3);
+}
+
+.cardTitle {
+  font-size: 1.25rem; /* Increase font size */
+  margin-bottom: 0.75rem; /* Adjust spacing */
+}
+
+.cardText {
+  font-size: 1rem; /* Adjust font size */
+  font-weight: bold;
+}
+
+.buyBtn {
+  background-color: #1f194f; /* Dark button color */
+  border-color: #1f194f;
+  color: #fff; /* White text color */
+  font-weight: bold; /* Bold text */
+}
+
+.buyBtn:hover {
+  background-color: #161132; /* Darken button color on hover */
+  border-color: #161132;
+}
+
+.cartSection {
+  text-align: center;
+  margin-top: 40px;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.cartCount {
+  font-size: 1.5rem;
+}
+
+.messageSection {
   margin-top: 20px;
   padding: 10px;
   background-color: #dff0d8; /* Success message background color */
   border: 1px solid #d0e9c6; /* Success message border */
   color: #3c763d; /* Success message text color */
-}
-
-.header {
-  background: linear-gradient(to right, #c976eb , #80acee, #464646);
-  padding: 20px 0;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #e9ecef;
   text-align: center;
-}
-
-.animated-text {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #17161d;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.tc {
-  margin-bottom: 20px;
-}
-
-.sidebar {
-  height: 100%;
-  width: 300px;
-  position: fixed;
-  top: 0;
-  right: -300px;
-  z-index: 1;
-  background-color: #464646;
-  overflow-y: auto;
-  transition: right 0.5s;
-  padding-top: 60px;
-}
-
-.sidebar.active {
-  right: 0;
+  border-radius: 15px;
 }
