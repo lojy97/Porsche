@@ -4,10 +4,10 @@ import styles from './login.module.css'; // Import the CSS module
 function Login({ onLoginSuccess }) {
   const handleLogin = async (event) => {
     event.preventDefault();
-  
+    
     const username = event.target.username.value;
     const password = event.target.password.value;
-  
+    
     try {
       // First, attempt to log in as admin
       console.log('Attempting to log in as admin');
@@ -19,7 +19,7 @@ function Login({ onLoginSuccess }) {
         body: JSON.stringify({ Name: username, Password: password }),
         credentials: 'include' // Include credentials (cookies) in the request
       });
-  
+    
       // If admin login fails, try customer login
       if (!response.ok) {
         console.log('Admin login failed, trying customer login');
@@ -32,19 +32,23 @@ function Login({ onLoginSuccess }) {
           credentials: 'include' // Include credentials (cookies) in the request
         });
       }
-  
+    
       const data = await response.json();
-  
+    
       // Handle response from the server, such as setting tokens or displaying errors
       if (response.ok) {
         // Invoke the onLoginSuccess function passed from the parent component
         onLoginSuccess();
+      } else {
+        throw new Error(data.message || 'Login failed');
       }
     } catch (error) {
       console.error('Error:', error);
+      // Display the error message to the user
+      alert('An error occurred during login. Please try again.');
     }
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={`row justify-content-end ${styles.row}`}>
