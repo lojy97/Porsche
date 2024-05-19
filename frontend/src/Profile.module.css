@@ -48,15 +48,23 @@ textarea {
 textarea {
     height: 150px;
 }
-
 button {
-    padding: 10px 10px;
-    background-color: #28a745;
+    padding: 12px 24px; /* Increase padding for a larger button */
+    background: linear-gradient(to bottom, #4CAF50, #2E8B57); /* Gradient background */
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px; /* Rounded corners */
     cursor: pointer;
-    text-align: justify;
+    text-align: center;
+    font-size: 16px; /* Adjust font size */
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s; /* Smooth transitions */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+
+button:hover {
+    transform: translateY(-2px); /* Move button up slightly on hover */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Enhance box shadow on hover */
+    background: linear-gradient(to bottom, #42a447, #2c7145); /* Darker gradient on hover */
 }
 
 .change password button:hover {
