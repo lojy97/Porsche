@@ -47,7 +47,7 @@ function Register({ handleRegisterSuccess }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        credentials: 'include', // Include credentials (cookies) in the request
+        credentials: 'include', // to make sure you're an admin
       });
   
       const responseData = await response.json();
