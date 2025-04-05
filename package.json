@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "bootstrap-icons": "^1.11.3",
-     "start": "node server.js",
+   
+  },"scripts": {
+  "start": "node server.js",
   "build": "cd frontend && npm install && npm run build"
-  }
+}
 }
